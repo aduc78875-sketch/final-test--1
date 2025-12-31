@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ Sơ Cá Nhân</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Project_huce/css/common.css">
+    <link rel="stylesheet" href="../Project_huce/css/profile.css">
+    <link rel="icon" type="image/png" href="../Project_huce/picture/logo.png">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <a href="../Project_huce/index.html">
+                    <img src="../Project_huce/picture/logo.png" alt="4Dreamer" class="logo-img" onerror="this.style.display='none'"> 
+                    <span class="brand-name">4DreamerCoffee</span>
+                </a>
+            </div>
+
+            <nav class="desktop-nav">
+                <a href="../Project_huce/index.html">Trang Chủ</a>
+                <a href="../Project_huce/shop.html">Cửa Hàng</a>
+                <a href="../Project_huce/news.html">Tin Tức</a>
+                <a href="../Project_huce/contact.html">Liên Hệ</a>
+            </nav>
+
+            <div class="header-actions">
+                <div id="user-info" class="user-account">
+                    <div class="user-profile-badge">
+                        <div class="avatar-circle">
+                            <span id="user-initial">U</span> 
+                        </div>
+                        <div class="user-meta">
+                            <span class="welcome-text">Xin chào,</span>
+                            <span id="user-name" class="user-name-text">User</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+                    </div>
+
+                    <div class="dropdown-menu">
+                        <ul class="d-links">
+                            <li>
+                                <a href="../Project_huce/profile.html">
+                                    <i class="fa-regular fa-user"></i> Hồ sơ cá nhân
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../Project_huce/orders.html">
+                                    <i class="fa-solid fa-receipt"></i> Đơn mua
+                                </a>
+                            </li>
+                            
+                            <li class="divider"></li> <li>
+                                <a href="#" onclick="logout()" style="color: #c9493d;">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <label for="menu-toggle" class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></label>
+            </div>
+        </div>
+    </header>
+
+    <div class="container profile-wrapper">
+        <aside class="profile-sidebar">
+            <div class="profile-avatar">
+                <div class="profile-avatar-circle" id="profileInitial">U</div>
+                <div class="profile-avatar-name" id="profileName">User</div>
+                <div class="profile-avatar-email" id="profileEmail">user@email.com</div>
+            </div>
+            <nav class="nav-menu">
+                <a href="../Project_huce/profile.html" class="active">
+                    <i class="fa-regular fa-user"></i> Hồ sơ cá nhân
+                </a>
+                <a href="../Project_huce/orders.html">
+                    <i class="fa-solid fa-receipt"></i> Đơn mua của tôi
+                </a>
+                <a href="#" onclick="logout(); return false;">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất
+                </a>
+            </nav>
+        </aside>
+
+        <div class="profile-content">
+            <div class="section-title">Thông Tin Cá Nhân</div>
+            <form id="profileForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Họ và tên</label>
+                        <input type="text" id="fullName" value="User" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="email" value="user@email.com" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="tel" id="phone" placeholder="090 xxx xxxx">
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày sinh</label>
+                        <input type="date" id="birthDate">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Địa chỉ</label>
+                        <input type="text" id="address" placeholder="Nhập địa chỉ đầy đủ">
+                    </div>
+                    <div class="form-group">
+                        <label>Thành phố</label>
+                        <input type="text" id="city" placeholder="Nhập thành phố">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-save">
+                    <i class="fa-solid fa-floppy-disk"></i> LƯU THÔNG TIN
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-block">
+                <h3>4Dreamer Coffee</h3>
+                <p style="margin-bottom: 15px;">Đăng ký nhận tin để không bỏ lỏ những ưu đãi ngọt ngào nhất từ chúng tôi.</p>
+                <div class="socials">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-block">
+                <h3>Giờ Mở Cửa</h3>
+                <ul class="footer-links">
+                    <li><span>Thứ 2 - Thứ 6:</span> <span class="text-gold">07:00 - 22:00</span></li>
+                    <li><span>Thứ 7 - CN:</span> <span class="text-gold">08:00 - 23:00</span></li>
+                    <li><span>Ngày Lễ:</span> <span class="text-gold">Mở cửa cả ngày</span></li>
+                </ul>
+            </div>
+            <div class="footer-block">
+                <h3>Về Chúng Tôi</h3>
+                <ul class="footer-links">
+                    <li><a href="../Project_huce/index.html"><i class="fa-solid fa-angle-right"></i> Trang Chủ</a></li>
+                    <li><a href="../Project_huce/shop.html"><i class="fa-solid fa-angle-right"></i> Cửa Hàng</a></li>
+                    <li><a href="../Project_huce/news.html"><i class="fa-solid fa-angle-right"></i> Tin Tức</a></li>
+                    <li><a href="../Project_huce/contact.html"><i class="fa-solid fa-angle-right"></i> Liên Hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-block">
+                <h3>Liên hệ</h3>
+                <ul class="contact-list">
+                    <li><i class="fa-solid fa-location-dot"></i> 55 Giải Phóng, Hà Nội</li>
+                    <li><i class="fa-solid fa-phone"></i> 090 123 4567</li>
+                    <li><i class="fa-solid fa-envelope"></i> contact@4dreamer.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright"><p>&copy; 2025 4DreamerCoffee. All rights reserved.</p></div>
+    </footer>
+
+    <script src="../Project_huce/js/toast.js"></script>
+    <script src="../Project_huce/js/notification.js"></script>
+    <script>
+    const API_BASE = 'http://localhost:3000/api';
+    let currentUser = null;
+
+    function loadProfile() {
+        const user = localStorage.getItem('user');
+        if (!user) {
+            window.location.href = '../Project_huce/signin.html';
+            return;
+        }
+        
+        currentUser = JSON.parse(user);
+        
+        // Kiểm tra user có ID không
+        if (!currentUser.id) {
+            console.error('User missing ID:', currentUser);
+            notification.error('Lỗi: Thông tin người dùng không đầy đủ');
+            return;
+        }
+        
+        document.getElementById('profileInitial').textContent = currentUser.name.charAt(0).toUpperCase();
+        document.getElementById('profileName').textContent = currentUser.name;
+        document.getElementById('profileEmail').textContent = currentUser.email;
+        document.getElementById('user-initial').textContent = currentUser.name.charAt(0).toUpperCase();
+        document.getElementById('user-name').textContent = currentUser.name;
+
+        // Hiển thị dữ liệu local trước
+        document.getElementById('fullName').value = currentUser.name || '';
+        document.getElementById('email').value = currentUser.email || '';
+        document.getElementById('phone').value = currentUser.phone || '';
+        document.getElementById('address').value = currentUser.address || '';
+
+        // Load dữ liệu từ server
+        fetch(`${API_BASE}/users/${currentUser.id}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    const user = data.data;
+                    document.getElementById('fullName').value = user.name || '';
+                    document.getElementById('email').value = user.email || '';
+                    document.getElementById('phone').value = user.phone || '';
+                    document.getElementById('address').value = user.address || '';
+                    document.getElementById('city').value = user.city || '';
+                    
+                    document.getElementById('profileInitial').textContent = user.name.charAt(0).toUpperCase();
+                    document.getElementById('profileName').textContent = user.name;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                notification.warning('Không thể tải dữ liệu từ server');
+            });
+    }
+
+    document.getElementById('profileForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const fullName = document.getElementById('fullName').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const address = document.getElementById('address').value.trim();
+        const city = document.getElementById('city').value.trim();
+        const saveBtn = this.querySelector('button[type="submit"]');
+        
+        if (!fullName) {
+            notification.error('Vui lòng nhập họ và tên');
+            document.getElementById('fullName').focus();
+            return;
+        }
+        
+        if (fullName.length < 2) {
+            notification.error('Họ và tên phải ít nhất 2 ký tự');
+            return;
+        }
+        
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            notification.error('Email không hợp lệ');
+            return;
+        }
+        
+        if (phone && !/^[0-9]{10,11}$/.test(phone.replace(/\s/g, ''))) {
+            notification.error('Số điện thoại không hợp lệ (10-11 chữ số)');
+            return;
+        }
+        
+        // Kiểm tra currentUser.id tồn tại
+        if (!currentUser || !currentUser.id) {
+            notification.error('Lỗi: Không tìm thấy thông tin người dùng');
+            return;
+        }
+        
+        saveBtn.disabled = true;
+        const originalHTML = saveBtn.innerHTML;
+        saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang lưu...';
+        
+        try {
+            const response = await fetch(`${API_BASE}/users/${currentUser.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: fullName,
+                    email: email,
+                    phone: phone,
+                    address: address,
+                    city: city
+                })
+            });
+            
+            const data = await response.json();
+            
+            console.log('Update response:', data);
+            
+            if (response.ok && data.success) {
+                // Cập nhật localStorage
+                currentUser.name = fullName;
+                currentUser.email = email;
+                currentUser.phone = phone;
+                currentUser.address = address;
+                currentUser.city = city;
+                localStorage.setItem('user', JSON.stringify(currentUser));
+                
+                // Cập nhật UI
+                document.getElementById('user-initial').textContent = fullName.charAt(0).toUpperCase();
+                document.getElementById('user-name').textContent = fullName;
+                document.getElementById('profileInitial').textContent = fullName.charAt(0).toUpperCase();
+                document.getElementById('profileName').textContent = fullName;
+                document.getElementById('profileEmail').textContent = email;
+                
+                // Cập nhật các field nhập liệu
+                document.getElementById('fullName').value = fullName;
+                document.getElementById('email').value = email;
+                document.getElementById('phone').value = phone;
+                document.getElementById('address').value = address;
+                document.getElementById('city').value = city;
+                
+                notification.success('✓ Lưu thông tin cá nhân thành công!');
+
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = originalHTML;
+            } else {
+                console.error('Update failed:', data);
+                notification.error(data.message || 'Lỗi khi lưu thông tin');
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = originalHTML;
+            }
+        } catch (error) {
+            console.error('Update error:', error);
+            notification.error('Lỗi: ' + error.message);
+            saveBtn.disabled = false;
+            saveBtn.innerHTML = originalHTML;
+        }
+    });
+
+    function logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        notification.success('Đang đăng xuất...');
+        setTimeout(() => {
+            window.location.href = '../Project_huce/index.html';
+        }, 1000);
+    }
+
+    function checkLoginStatus() {
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+        
+        // Nếu chưa login, chuyển hướng
+        if (!token || !user) {
+            window.location.href = '../Project_huce/signin.html';
+            return;
+        }
+        
+        // Kiểm tra user object có đủ dữ liệu không
+        try {
+            const userData = JSON.parse(user);
+            if (!userData.id) {
+                console.warn('User missing ID, creating default...');
+                // Tạo ID tạm thời nếu không có
+                userData.id = 1;
+                localStorage.setItem('user', JSON.stringify(userData));
+            }
+        } catch (e) {
+            console.error('Invalid user data:', e);
+            window.location.href = '../Project_huce/signin.html';
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            loadProfile();
+        });
+    } else {
+        checkLoginStatus();
+        loadProfile();
+    }
+    </script>
+</body>
+</html>

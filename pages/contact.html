@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên Hệ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Project_huce/css/common.css">
+    <link rel="stylesheet" href="../Project_huce/css/toast.css">
+    <link rel="stylesheet" href="../Project_huce/css/contact.css">
+    <link rel="icon" type="image/png" href="../Project_huce/picture/logo.png">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <a href="../Project_huce/index.html">
+                    <img src="../Project_huce/picture/logo.png" alt="4Dreamer" class="logo-img" onerror="this.style.display='none'"> 
+                    <span class="brand-name">4DreamerCoffee</span>
+                </a>
+            </div>
+
+            <nav class="desktop-nav">
+                <a href="../Project_huce/index.html">Trang Chủ</a>
+                <a href="../Project_huce/shop.html">Cửa Hàng</a>
+                <a href="../Project_huce/news.html">Tin Tức</a>
+                <a href="../Project_huce/contact.html" class="active">Liên Hệ</a> 
+            </nav>
+
+            <div class="header-actions">
+                <div id="auth-buttons" style="gap: 15px; align-items: center;">
+                    <a href="../Project_huce/signin.html" class="btn-login">Đăng nhập</a>
+                    <a href="../Project_huce/signup.html" class="btn-signup">Đăng ký</a>
+                </div>
+
+                <div id="user-info" class="user-account">
+                    <div class="user-profile-badge">
+                        <div class="avatar-circle">
+                            <span id="user-initial">U</span> 
+                        </div>
+                        <div class="user-meta">
+                            <span class="welcome-text">Xin chào,</span>
+                            <span id="user-name" class="user-name-text">User</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+                    </div>
+
+                    <div class="dropdown-menu">
+                        <ul class="d-links">
+                            <li>
+                                <a href="../Project_huce/profile.html">
+                                    <i class="fa-regular fa-user"></i> Hồ sơ cá nhân
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../Project_huce/orders.html">
+                                    <i class="fa-solid fa-receipt"></i> Đơn mua
+                                </a>
+                            </li>
+                            
+                            <li class="divider"></li> <li>
+                                <a href="#" onclick="logout()" style="color: #c9493d;">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <label for="menu-toggle" class="mobile-menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu-container">
+        <div class="menu-header">
+            <span class="mobile-logo-text">4Dreamer</span>
+            <label for="menu-toggle" class="close-menu"><i class="fa-solid fa-xmark"></i></label>
+        </div>
+        <ul class="mobile-list">
+            <li><a href="../Project_huce/index.html">Trang Chủ</a></li>
+            <li><a href="../Project_huce/shop.html">Cửa Hàng</a></li>
+            <li><a href="../Project_huce/news.html">Tin Tức</a></li>
+            <li><a href="../Project_huce/contact.html" class="text-gold">Liên hệ</a></li>
+        </ul>
+        <div class="mobile-auth-group">
+            <a href="../Project_huce/signin.html" class="btn-m-login">Đăng Nhập</a>
+            <a href="../Project_huce/signup.html" class="btn-m-signup">Đăng Ký</a>
+        </div>
+    </div>
+
+    <section class="page-banner banner-contact">
+        <h1 class="animate-up">Liên Hệ Với Chúng Tôi</h1>
+        <p class="animate-up delay-1">Chúng tôi luôn lắng nghe ý kiến của bạn</p>
+    </section>
+
+    <section class="contact-wrapper">
+        <div class="container">
+            <div class="contact-grid">
+                
+                <div class="contact-info">
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <div class="info-content">
+                            <h3>Địa chỉ cửa hàng</h3>
+                            <p>55 Giải Phóng, Đồng Tâm, Hai Bà Trưng, Hà Nội</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+                        <div class="info-content">
+                            <h3>Hotline hỗ trợ</h3>
+                            <p>090 123 4567 (7:00 - 23:00)</p>
+                            <p>024 3868 6868 (Văn phòng)</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <div class="info-content">
+                            <h3>Email liên hệ</h3>
+                            <p>contact@4dreamer.com</p>
+                            <p>support@4dreamer.com</p>
+                        </div>
+                    </div>
+
+                    <div class="map-frame">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.639684364273!2d105.83963231540203!3d21.00707629389274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac771bd9634d%3A0x6b87624d57602d11!2zNTUgR2nhuqNpIFBow7NuZywgxJDhu5NuZyBUw6JtLCBIYWkgQsOgIFRyxrBuZywgSMOgIE7hu5lpLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1677641234567!5m2!1svi!2s" 
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+
+                <div class="contact-form-box">
+                    <h2>Gửi tin nhắn cho 4DreamerCoffee</h2>
+                    <p style="margin-bottom: 30px; color: #777;">Bạn có thắc mắc về thực đơn, đặt bàn tiệc hay phản hồi dịch vụ? Hãy điền vào form bên dưới nhé.</p>
+                    
+                    <form action="#" method="POST" class="main-form" id="contactForm">
+                        <div class="input-row">
+                            <input type="text" id="fullname" placeholder="Họ và tên của bạn" required>
+                        </div>
+                        <div class="input-row">
+                            <input type="tel" id="phone" placeholder="Số điện thoại" required>
+                        </div>
+                        <div class="input-row full">
+                            <input type="email" id="email" placeholder="Địa chỉ Email" required>
+                        </div>
+                        <div class="input-row full">
+                            <input type="text" id="subject" placeholder="Tiêu đề (Vd: Đặt bàn, Phản ánh...)" required>
+                        </div>
+                        <div class="input-row full">
+                            <textarea id="message" rows="5" placeholder="Nội dung chi tiết..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Gửi Ngay</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-block">
+                <h3>4Dreamer Coffee</h3>
+                <p style="margin-bottom: 15px;">Đăng ký nhận tin để không bỏ lỡ những ưu đãi ngọt ngào nhất từ chúng tôi.</p>
+                
+                <form class="footer-newsletter">
+                    <input type="email" placeholder="Email của bạn...">
+                    <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+
+                <div class="socials">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-block">
+                <h3>Giờ Mở Cửa</h3>
+                <ul class="footer-links">
+                    <li><span>Thứ 2 - Thứ 6:</span> <span class="text-gold">07:00 - 22:00</span></li>
+                    <li><span>Thứ 7 - CN:</span> <span class="text-gold">08:00 - 23:00</span></li>
+                    <li><span>Ngày Lễ:</span> <span class="text-gold">Mở cửa cả ngày</span></li>
+                </ul>
+            </div>
+
+            <div class="footer-block">
+                <h3>Về Chúng Tôi</h3>
+                <ul class="footer-links">
+                    <li><a href="../Project_huce/index.html"><i class="fa-solid fa-angle-right"></i> Trang Chủ</a></li>
+                    <li><a href="../Project_huce/shop.html"><i class="fa-solid fa-angle-right"></i> Cửa Hàng</a></li>
+                    <li><a href="../Project_huce/news.html"><i class="fa-solid fa-angle-right"></i> Tin Tức</a></li>
+                    <li><a href="../Project_huce/contact.html"><i class="fa-solid fa-angle-right"></i> Liên Hệ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-block">
+                <h3>Liên hệ</h3>
+                <ul class="contact-list">
+                    <li><i class="fa-solid fa-location-dot"></i> 55 Giải Phóng, Hà Nội</li>
+                    <li><i class="fa-solid fa-phone"></i> 090 123 4567</li>
+                    <li><i class="fa-solid fa-envelope"></i> contact@4dreamer.com</li>
+                </ul>
+
+                <div class="payment-partners">
+                    <p class="pay-title">Chấp nhận thanh toán:</p>
+                    <div class="pay-icons">
+                        <i class="fa-brands fa-cc-visa" title="Visa"></i>
+                        <i class="fa-brands fa-cc-mastercard" title="MasterCard"></i>
+                        <i class="fa-solid fa-wallet" title="Tiền mặt/Chuyển khoản"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright"><p>&copy; 2025 4DreamerCoffee. All rights reserved.</p></div>
+    </footer>
+    <script src="../Project_huce/js/toast.js"></script>
+    <script>
+    // Handle contact form submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const fullname = document.getElementById('fullname').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+        
+        // Validation
+        if (!fullname || !phone || !email || !subject || !message) {
+            toast.warning('Vui lòng điền đầy đủ tất cả các trường!');
+            return;
+        }
+        
+        // Simple email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            toast.warning('Vui lòng nhập email hợp lệ!');
+            return;
+        }
+        
+        // Show success message
+        toast.success('Cảm ơn bạn! Chúng tôi sẽ liên hệ sớm nhất.');
+        
+        // Reset form
+        this.reset();
+    });
+
+    // Check login status - Consistent across all pages
+    function checkLoginStatus() {
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+        const authButtons = document.getElementById('auth-buttons');
+        const userInfo = document.getElementById('user-info');
+        
+        if (token && user) {
+            try {
+                const userData = JSON.parse(user);
+                // Hide auth buttons, show user info
+                if (authButtons) authButtons.style.display = 'none';
+                if (userInfo) userInfo.style.display = 'flex';
+                // Update user name and initial
+                const initialEl = document.getElementById('user-initial');
+                const nameEl = document.getElementById('user-name');
+                if (initialEl) initialEl.textContent = userData.name.charAt(0).toUpperCase();
+                if (nameEl) nameEl.textContent = userData.name;
+            } catch (e) {
+                console.error('Error parsing user data:', e);
+                authButtons.style.display = 'flex';
+                userInfo.style.display = 'none';
+            }
+        } else {
+            // Not logged in - show auth buttons, hide user info
+            if (authButtons) authButtons.style.display = 'flex';
+            if (userInfo) userInfo.style.display = 'none';
+        }
+    }
+
+    // Run on page load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+    } else {
+        checkLoginStatus();
+    }
+    // Safety check after short delay
+    setTimeout(checkLoginStatus, 100);
+
+    function logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        toast.success('Đã đăng xuất!');
+        setTimeout(() => {
+            window.location.href = '../Project_huce/index.html';
+        }, 1000);
+    }
+    </script>
+</body>
+</html>

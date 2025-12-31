@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đơn Mua</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Project_huce/css/common.css">
+    <link rel="stylesheet" href="../Project_huce/css/orders.css">
+    <link rel="icon" type="image/png" href="../Project_huce/picture/logo.png">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <a href="../Project_huce/index.html">
+                    <img src="../Project_huce/picture/logo.png" alt="4Dreamer" class="logo-img" onerror="this.style.display='none'"> 
+                    <span class="brand-name">4DreamerCoffee</span>
+                </a>
+            </div>
+
+            <nav class="desktop-nav">
+                <a href="../Project_huce/index.html">Trang Chủ</a>
+                <a href="../Project_huce/shop.html">Cửa Hàng</a>
+                <a href="../Project_huce/news.html">Tin Tức</a>
+                <a href="../Project_huce/contact.html">Liên Hệ</a>
+            </nav>
+
+            <div class="header-actions">
+                <div id="user-info" class="user-account">
+                    <div class="user-profile-badge">
+                        <div class="avatar-circle">
+                            <span id="user-initial">U</span> 
+                        </div>
+                        <div class="user-meta">
+                            <span class="welcome-text">Xin chào,</span>
+                            <span id="user-name" class="user-name-text">User</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+                    </div>
+
+                    <div class="dropdown-menu">
+                        <ul class="d-links">
+                            <li>
+                                <a href="../Project_huce/profile.html">
+                                    <i class="fa-regular fa-user"></i> Hồ sơ cá nhân
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../Project_huce/orders.html">
+                                    <i class="fa-solid fa-receipt"></i> Đơn mua
+                                </a>
+                            </li>
+                            
+                            <li class="divider"></li> <li>
+                                <a href="#" onclick="logout()" style="color: #c9493d;">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <label for="menu-toggle" class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></label>
+            </div>
+        </div>
+    </header>
+
+    <div class="container orders-wrapper">
+        <aside class="orders-sidebar">
+            <div class="profile-avatar">
+                <div class="profile-avatar-circle" id="profileInitial">U</div>
+                <div class="profile-avatar-name" id="profileName">User</div>
+                <div class="profile-avatar-email" id="profileEmail">user@email.com</div>
+            </div>
+            <nav class="nav-menu">
+                <a href="../Project_huce/profile.html">
+                    <i class="fa-regular fa-user"></i> Hồ sơ cá nhân
+                </a>
+                <a href="../Project_huce/orders.html" class="active">
+                    <i class="fa-solid fa-receipt"></i> Đơn mua của tôi
+                </a>
+                <a href="#" onclick="logout(); return false;">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất
+                </a>
+            </nav>
+        </aside>
+
+        <div class="orders-content">
+            <div class="section-title">Đơn Mua Của Tôi</div>
+            <div id="ordersList"></div>
+            <div id="pagination" style="display: flex; justify-content: center; gap: 10px; margin-top: 30px; align-items: center;"></div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-block">
+                <h3>4Dreamer Coffee</h3>
+                <p style="margin-bottom: 15px;">Đăng ký nhận tin để không bỏ lỡ những ưu đãi ngọt ngào nhất từ chúng tôi.</p>
+                <div class="socials">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-block">
+                <h3>Giờ Mở Cửa</h3>
+                <ul class="footer-links">
+                    <li><span>Thứ 2 - Thứ 6:</span> <span class="text-gold">07:00 - 22:00</span></li>
+                    <li><span>Thứ 7 - CN:</span> <span class="text-gold">08:00 - 23:00</span></li>
+                    <li><span>Ngày Lễ:</span> <span class="text-gold">Mở cửa cả ngày</span></li>
+                </ul>
+            </div>
+            <div class="footer-block">
+                <h3>Về Chúng Tôi</h3>
+                <ul class="footer-links">
+                    <li><a href="../Project_huce/index.html"><i class="fa-solid fa-angle-right"></i> Trang Chủ</a></li>
+                    <li><a href="../Project_huce/shop.html"><i class="fa-solid fa-angle-right"></i> Cửa Hàng</a></li>
+                    <li><a href="../Project_huce/news.html"><i class="fa-solid fa-angle-right"></i> Tin Tức</a></li>
+                    <li><a href="../Project_huce/contact.html"><i class="fa-solid fa-angle-right"></i> Liên Hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-block">
+                <h3>Liên hệ</h3>
+                <ul class="contact-list">
+                    <li><i class="fa-solid fa-location-dot"></i> 55 Giải Phóng, Hà Nội</li>
+                    <li><i class="fa-solid fa-phone"></i> 090 123 4567</li>
+                    <li><i class="fa-solid fa-envelope"></i> contact@4dreamer.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright"><p>&copy; 2025 4DreamerCoffee. All rights reserved.</p></div>
+    </footer>
+
+    <script src="../Project_huce/js/toast.js"></script>
+    <script src="../Project_huce/js/notification.js"></script>
+    <script>
+    const API_BASE = 'http://localhost:3000/api';
+    let currentUser = null;
+    let allUserOrders = [];
+    let currentPage = 1;
+    const ordersPerPage = 3;
+
+    function loadOrders() {
+        const user = localStorage.getItem('user');
+        if (!user) {
+            window.location.href = '../Project_huce/signin.html';
+            return;
+        }
+        
+        currentUser = JSON.parse(user);      
+        // Load user info
+        document.getElementById('profileInitial').textContent = currentUser.name.charAt(0).toUpperCase();
+        document.getElementById('profileName').textContent = currentUser.name;
+        document.getElementById('profileEmail').textContent = currentUser.email;
+        document.getElementById('user-initial').textContent = currentUser.name.charAt(0).toUpperCase();
+        document.getElementById('user-name').textContent = currentUser.name;
+
+        const allOrders = JSON.parse(localStorage.getItem('orders')) || [];
+        const userOrders = allOrders.filter(order => order.user_id === currentUser.id);
+        
+        allUserOrders = userOrders.sort((a, b) => 
+            new Date(b.created_at) - new Date(a.created_at)
+        );
+        
+        currentPage = 1;
+        renderOrdersPage();
+    }
+
+    function renderOrdersPage() {
+        const ordersList = document.getElementById('ordersList');
+        
+        if (allUserOrders.length === 0) {
+            ordersList.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p>Bạn chưa có đơn hàng nào</p>
+                    <a href="../Project_huce/shop.html" class="btn-shop">Mua sắm ngay</a>
+                </div>
+            `;
+            document.getElementById('pagination').innerHTML = '';
+            return;
+        }
+        
+        // Tính toán chỉ số bắt đầu và kết thúc
+        const startIndex = (currentPage - 1) * ordersPerPage;
+        const endIndex = startIndex + ordersPerPage;
+        const paginatedOrders = allUserOrders.slice(startIndex, endIndex);
+        
+        ordersList.innerHTML = paginatedOrders.map(order => `
+            <div class="order-card">
+                <div class="order-header">
+                    <div>
+                        <div class="order-id">Đơn hàng #${order.id}</div>
+                        <div class="order-date">${new Date(order.created_at).toLocaleDateString('vi-VN', { 
+                            year: 'numeric', 
+                            month: '2-digit', 
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        })}</div>
+                    </div>
+                    <div class="order-status ${order.status ? 'status-' + order.status : 'status-pending'}">
+                        ${getStatusText(order.status)}
+                    </div>
+                </div>
+                
+                <div class="order-details">
+                    <div class="order-info">
+                        <span class="info-label">Địa chỉ giao:</span>
+                        <span class="info-value">${order.delivery_address || 'N/A'}</span>
+                    </div>
+                    <div class="order-info">
+                        <span class="info-label">Số điện thoại :</span>
+                        <span class="info-value">${order.delivery_phone || 'N/A'}</span>
+                    </div>
+                </div>
+                
+                <div class="order-items" style="margin: 15px 0; padding: 15px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
+                    ${order.items ? order.items.map(item => `
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px;">
+                            <span>${item.name} x${item.qty}</span>
+                            <span style="font-weight: 600;">₫${parseInt(item.price * item.qty).toLocaleString('vi-VN')}</span>
+                        </div>
+                    `).join('') : '<p style="color: #999;">Không có sản phẩm</p>'}
+                </div>
+                
+                <div class="order-footer" style="margin-top: 15px;">
+                    <div>
+                        <div style="font-size: 12px; color: #888; margin-bottom: 5px;">Tổng tiền:</div>
+                        <div class="order-total">₫${parseInt(order.total_price).toLocaleString('vi-VN')}</div>
+                    </div>
+                    <div class="order-actions">
+                        <button class="btn-view" onclick="viewOrderDetails(${order.id})">
+                            <i class="fas fa-eye"></i> Xuất hoá đơn
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        
+        // Render pagination
+        renderPagination();
+    }
+
+    function renderPagination() {
+        const totalPages = Math.ceil(allUserOrders.length / ordersPerPage);
+        const paginationDiv = document.getElementById('pagination');
+        
+        if (totalPages <= 1) {
+            paginationDiv.innerHTML = '';
+            return;
+        }
+        
+        let html = '';
+        
+        if (currentPage > 1) {
+            html += `<button onclick="goToPage(${currentPage - 1})" style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; background: white; cursor: pointer; font-weight: 600;">← Trước</button>`;
+        }
+
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === currentPage) {
+                html += `<button style="padding: 8px 12px; border: none; border-radius: 4px; background: var(--gold); color: white; cursor: pointer; font-weight: 600; min-width: 40px;">${i}</button>`;
+            } else {
+                html += `<button onclick="goToPage(${i})" style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; background: white; cursor: pointer; font-weight: 600; min-width: 40px;">${i}</button>`;
+            }
+        }
+
+        if (currentPage < totalPages) {
+            html += `<button onclick="goToPage(${currentPage + 1})" style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; background: white; cursor: pointer; font-weight: 600;">Tiếp →</button>`;
+        }
+
+        html += `<span style="color: #999; font-size: 13px; margin-left: 10px;">Trang ${currentPage} / ${totalPages}</span>`;
+        
+        paginationDiv.innerHTML = html;
+    }
+
+    function goToPage(page) {
+        currentPage = page;
+        renderOrdersPage();
+        document.querySelector('.orders-content').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function getStatusText(status) {
+        const statusMap = {
+            'pending': '⏳ Chờ xác nhận',
+            'processing': '📦 Đang xử lý',
+            'shipped': '🚚 Đang giao',
+            'delivered': '✓ Đã giao',
+            'cancelled': '✗ Đã hủy'
+        };
+        return statusMap[status] || '⏳ Chờ xác nhận';
+    }
+
+    function viewOrderDetails(orderId) {
+        notification.info('📋 Chi tiết đơn hàng #' + orderId);
+    }
+
+    function logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        notification.success('Đang đăng xuất...');
+        setTimeout(() => {
+            window.location.href = '../Project_huce/index.html';
+        }, 1000);
+    }
+
+    // Check login status
+    function checkLoginStatus() {
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+        if (!token || !user) {
+            window.location.href = '../Project_huce/signin.html';
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            loadOrders();
+        });
+    } else {
+        checkLoginStatus();
+        loadOrders();
+    }
+    </script>
+</body>
+</html>

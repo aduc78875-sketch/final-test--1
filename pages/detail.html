@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Sản Phẩm</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Project_huce/css/common.css">
+    <link rel="stylesheet" href="../Project_huce/css/toast.css">
+    <link rel="stylesheet" href="../Project_huce/css/detail.css">
+    <link rel="icon" type="image/png" href="picture/logo.png">
+    
+</head>
+<body>
+    <div class="toast-box" id="toast">
+        <i class="fas fa-check-circle" style="font-size:40px; margin-bottom:15px;"></i>
+        <div style="font-size: 18px; font-weight: 600;">Đã thêm vào giỏ hàng!</div>
+    </div>
+
+    <header class="main-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <a href="../Project_huce/index.html">
+                    <img src="../Project_huce/picture/logo.png" alt="4Dreamer" class="logo-img" onerror="this.style.display='none'"> 
+                    <span class="brand-name">4DreamerCoffee</span>
+                </a>
+            </div>
+
+            <nav class="desktop-nav">
+                <a href="../Project_huce/index.html">Trang Chủ</a>
+                <a href="../Project_huce/shop.html">Cửa Hàng</a>
+                <a href="../Project_huce/news.html">Tin Tức</a>
+                <a href="../Project_huce/contact.html">Liên Hệ</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="../Project_huce/cart.html" class="cart-icon-header">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-badge-header" id="cartBadge">0</span>
+                </a>
+
+                <div id="auth-buttons" style="gap: 15px; align-items: center;">
+                    <a href="../Project_huce/signin.html" class="btn-login">Đăng nhập</a>
+                    <a href="../Project_huce/signup.html" class="btn-signup">Đăng ký</a>
+                </div>
+
+                <div id="user-info" class="user-account">
+                    <div class="user-profile-badge">
+                        <div class="avatar-circle">
+                            <span id="user-initial">U</span> 
+                        </div>
+                        <div class="user-meta">
+                            <span class="welcome-text">Xin chào,</span>
+                            <span id="user-name" class="user-name-text">User</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+                    </div>
+
+                    <div class="dropdown-menu">
+                        <ul class="d-links">
+                            <li>
+                                <a href="../Project_huce/profile.html">
+                                    <i class="fa-regular fa-user"></i> Hồ sơ cá nhân
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../Project_huce/orders.html">
+                                    <i class="fa-solid fa-receipt"></i> Đơn mua
+                                </a>
+                            </li>
+                            
+                            <li class="divider"></li> <li>
+                                <a href="#" onclick="logout()" style="color: #c9493d;">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <label for="menu-toggle" class="mobile-menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu-container">
+        <div class="menu-header">
+            <span class="mobile-logo-text">4Dreamer</span>
+            <label for="menu-toggle" class="close-menu"><i class="fa-solid fa-xmark"></i></label>
+        </div>
+        <ul class="mobile-list">
+            <li><a href="../Project_huce/index.html">Trang Chủ</a></li>
+            <li><a href="../Project_huce/shop.html">Cửa Hàng</a></li>
+            <li><a href="../Project_huce/news.html">Tin Tức</a></li>
+            <li><a href="../Project_huce/contact.html">Liên hệ</a></li>
+        </ul>
+        <div class="mobile-auth-group">
+            <a href="../Project_huce/signin.html" class="btn-m-login">Đăng Nhập</a>
+            <a href="../Project_huce/signup.html" class="btn-m-signup">Đăng Ký</a>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div class="back-nav">
+            <a href="../Project_huce/shop.html" class="btn-back">
+                <i class="fas fa-arrow-left"></i> Quay lại cửa hàng
+            </a>
+        </div>
+
+        <div class="product-detail-container">
+            <div class="detail-left">
+                <div class="main-image">
+                    <img id="mainImg" src="" alt="Product Image">
+                </div>
+            </div>
+            
+            <div class="detail-right">
+                <h1 class="product-title" id="prodTitle">Đang tải thông tin...</h1>
+                
+                <div class="meta-info">
+                    <div><span class="rating-stars">5.0 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span></div>
+                    <div style="width: 1px; background: #ddd; margin: 0 10px;"></div>
+                    <div><span id="soldCount" style="color: var(--text-brown); font-weight: 700;">0</span> Đã Bán</div>
+                </div>
+
+                <div class="price-section">
+                    <div>
+                        <span class="original-price" id="oldPrice"></span>
+                        <div class="current-price" id="currPrice">₫0</div>
+                    </div>
+                    <span class="discount-tag">GIẢM 20%</span>
+                </div>
+
+                <div class="transport-section">
+                    <i class="fas fa-truck-fast"></i>
+                    <span>Vận chuyển tới <b>Hà Nội</b>: ₫15.000</span>
+                </div>
+
+                <div class="qty-section">
+                    <div style="font-weight: 600;">Số Lượng:</div>
+                    <div class="qty-control">
+                        <button class="qty-btn" onclick="changeQty(-1)">-</button>
+                        <input type="text" class="qty-input" value="1" id="inputQty" readonly>
+                        <button class="qty-btn" onclick="changeQty(1)">+</button>
+                    </div>
+                    <div style="font-size: 13px; color: #888;">(Còn hàng)</div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-add-cart" onclick="addToCart(false)">
+                        <i class="fas fa-cart-plus"></i> Thêm Vào Giỏ
+                    </button>
+                    <button class="btn btn-buy-now" onclick="addToCart(true)">
+                        Mua Ngay
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-desc">
+            <div class="desc-grid">
+                <div class="desc-left">
+                    <div class="desc-title">MÔ TẢ SẢN PHẨM</div>
+                    <div class="desc-content">
+                        Đang tải thông tin...
+                    </div>
+                </div>
+
+                <aside class="desc-right">
+                    <div class="reviews-panel">
+                        <div class="reviews-header">ĐÁNH GIÁ TỪ KHÁCH HÀNG</div>
+                        <div class="reviews-summary">
+                            <div class="avg">4.8 <span style="font-size: 16px; color: #999; font-weight: 400;">/ 5</span></div>
+                            <div class="stars" style="font-size: 14px; margin-bottom: 5px;"> 
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <div style="font-size: 13px; color: #888;">(1.234 đánh giá)</div>
+                        </div>
+
+                        <div class="reviews-list">
+                            <div class="review">
+                                <div class="avatar">NA</div>
+                                <div class="body">
+                                    <div class="author">Nguyễn A</div>
+                                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                    <div class="text">Cà phê thơm, vị đậm, đóng gói đẹp. Sẽ mua lại.</div>
+                                </div>
+                            </div>
+                            <div class="review">
+                                <div class="avatar">TB</div>
+                                <div class="body">
+                                    <div class="author">Trần B</div>
+                                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                                    <div class="text">Hương khá tốt nhưng tôi muốn hạt rang nhạt hơn một chút.</div>
+                                </div>
+                            </div>
+                            <div class="review">
+                                <div class="avatar">LC</div>
+                                <div class="body">
+                                    <div class="author">Lê C</div>
+                                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                    <div class="text">Giao hàng nhanh, chất lượng đúng mô tả. Recommend.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-block">
+                <h3>4Dreamer Coffee</h3>
+                <p style="margin-bottom: 15px;">Đăng ký nhận tin để không bỏ lỡ những ưu đãi ngọt ngào nhất từ chúng tôi.</p>
+                
+                <form class="footer-newsletter">
+                    <input type="email" placeholder="Email của bạn...">
+                    <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+
+                <div class="socials">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-block">
+                <h3>Giờ Mở Cửa</h3>
+                <ul class="footer-links">
+                    <li><span>Thứ 2 - Thứ 6:</span> <span class="text-gold">07:00 - 22:00</span></li>
+                    <li><span>Thứ 7 - CN:</span> <span class="text-gold">08:00 - 23:00</span></li>
+                    <li><span>Ngày Lễ:</span> <span class="text-gold">Mở cửa cả ngày</span></li>
+                </ul>
+            </div>
+
+            <div class="footer-block">
+                <h3>Về Chúng Tôi</h3>
+                <ul class="footer-links">
+                    <li><a href="../Project_huce/index.html"><i class="fa-solid fa-angle-right"></i> Trang Chủ</a></li>
+                    <li><a href="../Project_huce/shop.html"><i class="fa-solid fa-angle-right"></i> Cửa Hàng</a></li>
+                    <li><a href="../Project_huce/news.html"><i class="fa-solid fa-angle-right"></i> Tin Tức</a></li>
+                    <li><a href="../Project_huce/contact.html"><i class="fa-solid fa-angle-right"></i> Liên Hệ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-block">
+                <h3>Liên hệ</h3>
+                <ul class="contact-list">
+                    <li><i class="fa-solid fa-location-dot"></i> 55 Giải Phóng, Hà Nội</li>
+                    <li><i class="fa-solid fa-phone"></i> 090 123 4567</li>
+                    <li><i class="fa-solid fa-envelope"></i> contact@4dreamer.com</li>
+                </ul>
+
+                <div class="payment-partners">
+                    <p class="pay-title">Chấp nhận thanh toán:</p>
+                    <div class="pay-icons">
+                        <i class="fa-brands fa-cc-visa" title="Visa"></i>
+                        <i class="fa-brands fa-cc-mastercard" title="MasterCard"></i>
+                        <i class="fa-solid fa-wallet" title="Tiền mặt/Chuyển khoản"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright"><p>&copy; 2025 4DreamerCoffee. All rights reserved.</p></div>
+    </footer>
+
+    <script>
+        let products = [];
+        let currentId = null;
+        let currentProduct = null;
+        let buyQty = 1;
+
+        async function loadProductsList() {
+            try {
+                products = JSON.parse(localStorage.getItem('products')) || [];
+                
+                if (products.length === 0) {
+                    const response = await fetch('http://localhost:3000/api/products');
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        products = result.data.map(p => ({
+                            id: p.id,
+                            name: p.name,
+                            price: p.price,
+                            sold: p.sold || '0',
+                            cat: p.category,
+                            image: p.image,
+                            date: p.date_added
+                        }));
+                        localStorage.setItem('products', JSON.stringify(products));
+                    }
+                }
+            } catch (e) {
+                console.error('Error loading products:', e);
+            }
+            loadDetail();
+        }
+
+        function loadDetail() {
+            const params = new URLSearchParams(window.location.search);
+            currentId = parseInt(params.get('id'));
+            currentProduct = products.find(p => p.id === currentId);
+
+            if (currentProduct) {
+                document.title = currentProduct.name + " - 4Dreamer Coffee";
+                document.getElementById('mainImg').src = currentProduct.image;
+                document.getElementById('prodTitle').innerText = currentProduct.name;
+                         
+                const oldPrice = currentProduct.price * 1.2;
+                document.getElementById('oldPrice').innerText = '₫' + oldPrice.toLocaleString('vi-VN');
+                document.getElementById('currPrice').innerText = '₫' + currentProduct.price.toLocaleString('vi-VN');
+                document.getElementById('soldCount').innerText = currentProduct.sold;
+                
+                // Hiển thị miêu tả động
+                const descContent = document.querySelector('.desc-content');
+                if (descContent && currentProduct.desc) {
+                    descContent.innerHTML = currentProduct.desc;
+                }
+            } else {
+                document.querySelector('.product-detail-container').innerHTML = "<div style='text-align:center; width:100%; padding:50px'><h3>Không tìm thấy sản phẩm</h3><a href='index.html' style='color:var(--gold); font-weight:700;'>Quay lại cửa hàng</a></div>";
+            }
+            updateBadge();
+        }
+
+        function changeQty(delta) {
+            buyQty += delta;
+            if(buyQty < 1) buyQty = 1;
+            document.getElementById('inputQty').value = buyQty;
+        }
+
+        function addToCart(isBuyNow) {
+            if(!currentProduct) return;
+            
+            if(isBuyNow) {
+                const itemToBuy = [{ ...currentProduct, qty: buyQty }];
+                localStorage.setItem('checkoutItems', JSON.stringify(itemToBuy));
+                window.location.href = 'checkout.html';
+                return; 
+            }
+
+            let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+            const exist = cart.find(i => i.id === currentId);
+            
+            if(exist) {
+                exist.qty += buyQty;
+            } else {
+                cart.push({ ...currentProduct, qty: buyQty });
+            }
+
+            localStorage.setItem('myCart', JSON.stringify(cart));
+            updateBadge();
+
+            const t = document.getElementById('toast');
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2000);
+        }
+
+        function updateBadge() {
+            let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+            const total = cart.reduce((sum, i) => sum + i.qty, 0);
+            const badge = document.getElementById('cartBadge');
+            if(badge) badge.innerText = total;
+        }
+
+        loadProductsList();
+    </script>
+    <script src="../Project_huce/js/toast.js"></script>
+    <script>
+
+    function checkLoginStatus() {
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+        const authButtons = document.getElementById('auth-buttons');
+        const userInfo = document.getElementById('user-info');
+        
+        if (token && user) {
+            try {
+                const userData = JSON.parse(user);
+                if (authButtons) authButtons.style.display = 'none';
+                if (userInfo) userInfo.style.display = 'flex';
+                // Update user name and initial
+                const initialEl = document.getElementById('user-initial');
+                const nameEl = document.getElementById('user-name');
+                if (initialEl) initialEl.textContent = userData.name.charAt(0).toUpperCase();
+                if (nameEl) nameEl.textContent = userData.name;
+            } catch (e) {
+                console.error('Error parsing user data:', e);
+                authButtons.style.display = 'flex';
+                userInfo.style.display = 'none';
+            }
+        } else {
+            // Not logged in - show auth buttons, hide user info
+            if (authButtons) authButtons.style.display = 'flex';
+            if (userInfo) userInfo.style.display = 'none';
+        }
+    }
+
+    // Run on page load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+    } else {
+        checkLoginStatus();
+    }
+    // Safety check after short delay
+    setTimeout(checkLoginStatus, 100);
+
+    function logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        toast.success('Đã đăng xuất!');
+        setTimeout(() => {
+            window.location.href = '../Project_huce/index.html';
+        }, 1000);
+    }
+    </script>
+</body>
+</html>

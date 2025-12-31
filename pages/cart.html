@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../picture/logo.png">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/toast.css">
+    <link rel="stylesheet" href="../css/cart.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../picture/logo.png" alt="4Dreamer" class="logo-img" onerror="this.style.display='none'"> 
+                    <span class="brand-name">4DreamerCoffee</span>
+                </a>
+            </div>
+
+            <nav class="desktop-nav">
+                <a href="../index.html">Trang Chủ</a>
+                <a href="shop.html">Cửa Hàng</a>
+                <a href="news.html">Tin Tức</a>
+                <a href="contact.html">Liên Hệ</a>
+            </nav>
+
+            <div class="header-actions">                
+                <div id="auth-buttons" style="gap: 15px; align-items: center;">
+                    <a href="signin.html" class="btn-login">Đăng nhập</a>
+                    <a href="signup.html" class="btn-signup">Đăng ký</a>
+                </div>
+
+                <div id="user-info" class="user-account">
+                    <div class="user-profile-badge">
+                        <div class="avatar-circle">
+                            <span id="user-initial">U</span> 
+                        </div>
+                        <div class="user-meta">
+                            <span class="welcome-text">Xin chào,</span>
+                            <span id="user-name" class="user-name-text">User</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+                    </div>
+
+                    <div class="dropdown-menu">
+                        <ul class="d-links">
+                            <li>
+                                <a href="profile.html">
+                                    <i class="fa-regular fa-user"></i> Hồ sơ cá nhân
+                                </a>
+                            </li>
+                            <li>
+                                <a href="orders.html">
+                                    <i class="fa-solid fa-receipt"></i> Đơn mua
+                                </a>
+                            </li>
+                            
+                            <li class="divider"></li> <li>
+                                <a href="#" onclick="logout()" style="color: #c9493d;">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <label for="menu-toggle" class="mobile-menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu-container">
+        <div class="menu-header">
+            <span class="mobile-logo-text">4Dreamer</span>
+            <label for="menu-toggle" class="close-menu"><i class="fa-solid fa-xmark"></i></label>
+        </div>
+        <ul class="mobile-list">
+            <li><a href="../index.html">Trang Chủ</a></li>
+            <li><a href="shop.html">Cửa Hàng</a></li>
+            <li><a href="news.html">Tin Tức</a></li>
+            <li><a href="contact.html">Liên hệ</a></li>
+        </ul>
+        <div class="mobile-auth-group">
+            <a href="signin.html" class="btn-m-login">Đăng Nhập</a>
+            <a href="signup.html" class="btn-m-signup">Đăng Ký</a>
+        </div>
+    </div>
+
+    <div class="container cart-wrapper">
+        <div class="cart-container">
+            <div class="page-title">Giỏ Hàng Của Bạn</div>
+
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;"><input type="checkbox" class="custom-chk" id="checkAll" onclick="toggleAll(this)" checked></th>
+                        <th>Sản phẩm</th>
+                        <th>Đơn giá</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="cartBody">
+                    </tbody>
+            </table>
+
+            <div class="cart-summary" id="cartFooter">
+                <a href="shop.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Mua thêm sản phẩm khác
+                </a>
+                
+                <div class="checkout-area">
+                    <p style="color:#666; font-size:14px;">Tổng thanh toán (<span id="selectedCount" style="font-weight:700; color:var(--text-brown)">0</span> sản phẩm):</p>
+                    <div class="final-price" id="totalPrice">₫0</div>
+                    <button class="btn-checkout" onclick="processCheckout()">
+                        Tiến Hành Đặt Hàng <i class="fas fa-arrow-right" style="margin-left:5px"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Confirmation -->
+    <div id="confirmModal" class="modal-overlay" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận</h5>
+                    <button type="button" class="modal-close" onclick="closeConfirmModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p id="confirmMessage">Bạn chắc chắn?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-cancel" onclick="closeConfirmModal()">Hủy</button>
+                    <button class="btn-confirm" id="confirmBtn" onclick="executeConfirm()">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-block">
+                <h3>4Dreamer Coffee</h3>
+                <p style="margin-bottom: 15px;">Đăng ký nhận tin để không bỏ lỡ những ưu đãi ngọt ngào nhất từ chúng tôi.</p>
+                <form class="footer-newsletter">
+                    <input type="email" placeholder="Email của bạn...">
+                    <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+                <div class="socials">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-block">
+                <h3>Giờ Mở Cửa</h3>
+                <ul class="footer-links">
+                    <li><span>Thứ 2 - Thứ 6:</span> <span class="text-gold">07:00 - 22:00</span></li>
+                    <li><span>Thứ 7 - CN:</span> <span class="text-gold">08:00 - 23:00</span></li>
+                    <li><span>Ngày Lễ:</span> <span class="text-gold">Mở cửa cả ngày</span></li>
+                </ul>
+            </div>
+
+            <div class="footer-block">
+                <h3>Về Chúng Tôi</h3>
+                <ul class="footer-links">
+                    <li><a href="../index.html"><i class="fa-solid fa-angle-right"></i> Trang Chủ</a></li>
+                    <li><a href="shop.html"><i class="fa-solid fa-angle-right"></i> Cửa Hàng</a></li>
+                    <li><a href="news.html"><i class="fa-solid fa-angle-right"></i> Tin Tức</a></li>
+                    <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Liên Hệ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-block">
+                <h3>Liên hệ</h3>
+                <ul class="contact-list">
+                    <li><i class="fa-solid fa-location-dot"></i> 55 Giải Phóng, Hà Nội</li>
+                    <li><i class="fa-solid fa-phone"></i> 090 123 4567</li>
+                    <li><i class="fa-solid fa-envelope"></i> contact@4dreamer.com</li>
+                </ul>
+                <div class="payment-partners">
+                    <p class="pay-title">Chấp nhận thanh toán:</p>
+                    <div class="pay-icons">
+                        <i class="fa-brands fa-cc-visa" title="Visa"></i>
+                        <i class="fa-brands fa-cc-mastercard" title="MasterCard"></i>
+                        <i class="fa-solid fa-wallet" title="Tiền mặt/Chuyển khoản"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright"><p>&copy; 2025 4DreamerCoffee. All rights reserved.</p></div>
+    </footer>
+
+    <script src="../js/toast.js"></script>
+    <script>
+        // Giỏ hàng được phân biệt: khách vs user đã đăng nhập
+        const cartManager = {
+            // Lấy key giỏ hàng dựa vào trạng thái đăng nhập
+            getCartKey: function() {
+                const token = localStorage.getItem('token');
+                const user = localStorage.getItem('user');
+                
+                if (token && user) {
+                    try {
+                        const userData = JSON.parse(user);
+                        return `cart_user_${userData.id}`;
+                    } catch (e) {
+                        return 'cart_anonymous';
+                    }
+                }
+                return 'cart_anonymous';
+            },
+            
+            getCart: async function() {
+                try {
+                    const cartKey = this.getCartKey();
+                    const cart = localStorage.getItem(cartKey);
+                    return cart ? JSON.parse(cart) : [];
+                } catch (e) {
+                    console.error('Error getting cart:', e);
+                    return [];
+                }
+            },
+            
+            addToCart: async function(productId, quantity) {
+                try {
+                    let cart = await this.getCart();
+                    const existingItem = cart.find(item => item.product_id === productId);
+                    
+                    if (existingItem) {
+                        existingItem.quantity += quantity;
+                    } else {
+                        cart.push({
+                            product_id: productId,
+                            quantity: quantity,
+                            added_at: new Date().toISOString()
+                        });
+                    }
+                    
+                    const cartKey = this.getCartKey();
+                    localStorage.setItem(cartKey, JSON.stringify(cart));
+                    return { success: true };
+                } catch (error) {
+                    console.error('Error adding to cart:', error);
+                    return { success: false, message: error.message };
+                }
+            },
+            
+            removeFromCart: async function(productId) {
+                try {
+                    let cart = await this.getCart();
+                    cart = cart.filter(item => item.product_id !== productId);
+                    const cartKey = this.getCartKey();
+                    localStorage.setItem(cartKey, JSON.stringify(cart));
+                    return { success: true };
+                } catch (error) {
+                    console.error('Error removing from cart:', error);
+                    return { success: false, message: error.message };
+                }
+            },
+            
+            updateQuantity: async function(productId, quantity) {
+                try {
+                    let cart = await this.getCart();
+                    const item = cart.find(c => c.product_id === productId);
+                    if (item) {
+                        if (quantity <= 0) {
+                            cart = cart.filter(c => c.product_id !== productId);
+                        } else {
+                            item.quantity = quantity;
+                        }
+                        const cartKey = this.getCartKey();
+                        localStorage.setItem(cartKey, JSON.stringify(cart));
+                    }
+                    return { success: true };
+                } catch (error) {
+                    console.error('Error updating quantity:', error);
+                    return { success: false, message: error.message };
+                }
+            },
+            
+            clearCart: async function() {
+                try {
+                    const cartKey = this.getCartKey();
+                    localStorage.setItem(cartKey, JSON.stringify([]));
+                    return { success: true };
+                } catch (error) {
+                    console.error('Error clearing cart:', error);
+                    return { success: false, message: error.message };
+                }
+            },
+            
+            // Migrate giỏ hàng từ anonymous sang user đã đăng nhập
+            migrateCartOnLogin: async function(userId) {
+                try {
+                    const anonymousCart = localStorage.getItem('cart_anonymous');
+                    
+                    if (anonymousCart) {
+                        const anonymousItems = JSON.parse(anonymousCart);
+                        const userCartKey = `cart_user_${userId}`;
+                        let userCart = [];
+                        
+                        const existingUserCart = localStorage.getItem(userCartKey);
+                        if (existingUserCart) {
+                            userCart = JSON.parse(existingUserCart);
+                        }
+                        
+                        // Merge items từ anonymous cart vào user cart
+                        anonymousItems.forEach(aItem => {
+                            const existingUserItem = userCart.find(uItem => uItem.product_id === aItem.product_id);
+                            if (existingUserItem) {
+                                existingUserItem.quantity += aItem.quantity;
+                            } else {
+                                userCart.push(aItem);
+                            }
+                        });
+                        
+                        localStorage.setItem(userCartKey, JSON.stringify(userCart));
+
+                        localStorage.removeItem('cart_anonymous');
+                    }
+                } catch (error) {
+                    console.error('Error migrating cart on login:', error);
+                }
+            }
+        };
+    </script>
+    <script src="../js/auth-helper.js"></script>
+    <script>
+        let cart = [];
+        let products = [];
+        let pendingConfirmAction = null;
+
+        // Modal Confirmation Functions
+        function showConfirmModal(message, callback) {
+            document.getElementById('confirmMessage').textContent = message;
+            document.getElementById('confirmModal').style.display = 'flex';
+            pendingConfirmAction = callback;
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+            pendingConfirmAction = null;
+        }
+
+        function executeConfirm() {
+            if (pendingConfirmAction) {
+                pendingConfirmAction();
+            }
+            closeConfirmModal();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('confirmModal');
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeConfirmModal();
+                }
+            });
+        });
+
+        // Lấy dữ liệu sản phẩm từ API hoặc localStorage
+        async function loadProducts() {
+            try {
+                products = JSON.parse(localStorage.getItem('products')) || [];
+                
+                if (products.length === 0) {
+                    const response = await fetch('http://localhost:3000/api/products');
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        products = result.data.map(p => ({
+                            id: p.id,
+                            name: p.name,
+                            price: p.price,
+                            sold: p.sold || '0',
+                            cat: p.category,
+                            image: p.image,
+                            date: p.date_added
+                        }));
+                        localStorage.setItem('products', JSON.stringify(products));
+                    }
+                }
+            } catch (e) {
+                console.error('Error loading products:', e);
+                products = [];
+            }
+        }
+
+        function getProductDetails(productId) {
+            return products.find(p => p.id === productId);
+        }
+
+        async function loadCart() {
+            try {
+                const cartItems = await cartManager.getCart();
+                cart = cartItems;
+                const tbody = document.getElementById('cartBody');
+                tbody.innerHTML = '';
+                updateHeaderBadge();
+
+                if(cartItems.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6">
+                                <div class="empty-cart-msg">
+                                    <i class="fas fa-mug-hot"></i>
+                                    <h3>Giỏ hàng của bạn đang trống</h3>
+                                    <p style="color:#888; margin-bottom:20px;">Hãy thêm vài món ngon vào đây nhé!</p>
+                                    <a href="shop.html" class="btn-checkout" style="font-size:14px; padding:10px 30px;">Dạo Cửa Hàng</a>
+                                </div>
+                            </td>
+                        </tr>`;
+                    document.getElementById('cartFooter').style.display = 'none';
+                    return;
+                }
+
+                document.getElementById('cartFooter').style.display = 'flex';
+
+                cartItems.forEach((item, index) => {
+                    const product = getProductDetails(item.product_id);
+                    if (!product) {
+                        console.warn('Không tìm thấy sản phẩm ID:', item.product_id);
+                        return;
+                    }
+
+                    let total = product.price * item.quantity;
+                    tbody.innerHTML += `
+                        <tr id="row-${item.product_id}">
+                            <td>
+                                <input type="checkbox" class="custom-chk item-chk" data-product-id="${item.product_id}" onclick="updateSummary()" checked>
+                            </td>
+                            <td>
+                                <div class="cart-product-info" onclick="window.location.href='detail.html?id=${product.id}'">
+                                    <img src="${product.image}" class="cart-product-img" onerror="this.src='https://via.placeholder.com/80'">
+                                    <div>
+                                        <div class="cart-product-name">${product.name}</div>
+                                        <div class="cart-product-cat">Loại: ${product.cat || 'Sản phẩm'}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="price-text">₫${product.price.toLocaleString('vi-VN')}</td>
+                            <td>
+                                <div class="qty-wrapper">
+                                    <button onclick="changeQty(${item.product_id}, -1)">-</button>
+                                    <input value="${item.quantity}" readonly>
+                                    <button onclick="changeQty(${item.product_id}, 1)">+</button>
+                                </div>
+                            </td>
+                            <td class="total-text">₫${total.toLocaleString('vi-VN')}</td>
+                            <td style="text-align: center;">
+                                <button class="btn-remove" onclick="removeItem(${item.product_id})"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                updateSummary();
+            } catch (error) {
+                console.error('Error loading cart:', error);
+            }
+        }
+
+        function toggleAll(source) {
+            const checkboxes = document.querySelectorAll('.item-chk');
+            checkboxes.forEach(chk => { chk.checked = source.checked; });
+            updateSummary();
+        }
+
+        function updateSummary() {
+            let totalMoney = 0;
+            let count = 0;
+            const checkboxes = document.querySelectorAll('.item-chk');
+
+            checkboxes.forEach((chk) => {
+                if (chk.checked) {
+                    const productId = parseInt(chk.getAttribute('data-product-id'));
+                    const product = getProductDetails(productId);
+                    
+                    // Lấy số lượng từ input field thay vì từ biến cart
+                    const row = chk.closest('tr');
+                    const qtyInput = row.querySelector('.qty-wrapper input');
+                    const quantity = parseInt(qtyInput.value) || 0;
+                    
+                    if (product && quantity > 0) {
+                        totalMoney += product.price * quantity;
+                        count++;
+                    }
+                }
+            });
+
+            document.getElementById('totalPrice').innerText = '₫' + totalMoney.toLocaleString('vi-VN');
+            document.getElementById('selectedCount').innerText = count;
+        }
+
+        async function changeQty(productId, delta) {
+            try {
+                const cartItem = cart.find(c => c.product_id === productId);
+                if (!cartItem) {
+                    console.error('Không tìm thấy sản phẩm trong giỏ hàng');
+                    return;
+                }
+
+                const newQty = cartItem.quantity + delta;
+                if(newQty <= 0) {
+                    confirmDelete(productId);
+                    return;
+                }
+
+                await cartManager.updateQuantity(productId, newQty);
+                const item = cart.find(c => c.product_id === productId);
+                if (item) {
+                    item.quantity = newQty;
+                }
+                
+                const row = document.getElementById(`row-${productId}`);
+                if (row) {
+                    const qtyInput = row.querySelector('.qty-wrapper input');
+                    qtyInput.value = newQty;
+                    
+                    // Cập nhật tổng tiền của row này
+                    const product = getProductDetails(productId);
+                    const totalCell = row.querySelector('.total-text');
+                    const total = product.price * newQty;
+                    totalCell.innerText = '₫' + total.toLocaleString('vi-VN');
+                }
+                
+                // Cập nhật tổng tiền chung
+                updateSummary();
+                toast.success('Cập nhật số lượng thành công!');
+            } catch (error) {
+                console.error('Error changing quantity:', error);
+            }
+        }
+
+        function confirmDelete(productId) {
+            showConfirmModal('Bạn chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?', async () => {
+                try {
+                    await cartManager.removeFromCart(productId);
+                    toast.success('Đã xóa sản phẩm khỏi giỏ hàng!');
+                    
+                    // Cập nhật biến cart
+                    cart = cart.filter(c => c.product_id !== productId);
+                    
+                    await loadCart();
+                } catch (error) {
+                    console.error('Error removing item:', error);
+                }
+            });
+        }
+
+        async function removeItem(productId) {
+            confirmDelete(productId);
+        }
+
+        async function updateHeaderBadge() {
+            try {
+                const cartItems = await cartManager.getCart();
+                document.getElementById('cartBadge').innerText = cartItems.length;
+            } catch (error) {
+                console.error('Error updating badge:', error);
+            }
+        }
+
+        async function processCheckout() {
+            try {
+                const checkboxes = document.querySelectorAll('.item-chk');
+                let selectedItems = [];
+                
+                checkboxes.forEach((chk) => {
+                    if(chk.checked) {
+                        const productId = parseInt(chk.getAttribute('data-product-id'));
+                        const cartItem = cart.find(c => c.product_id === productId);
+                        const product = getProductDetails(productId);
+                        
+                        if (cartItem && product) {
+                            selectedItems.push({
+                                ...product,
+                                quantity: cartItem.quantity,
+                                qty: cartItem.quantity
+                            });
+                        }
+                    }
+                });
+
+                if(selectedItems.length === 0) {
+                    alert("Vui lòng chọn ít nhất 1 sản phẩm để thanh toán.");
+                    return;
+                }
+
+                localStorage.setItem('checkoutItems', JSON.stringify(selectedItems));
+                window.location.href = 'checkout.html';
+            } catch (error) {
+                console.error('Error processing checkout:', error);
+            }
+        }
+
+        // Khởi tạo
+        async function init() {
+            await loadProducts();
+            cart = await cartManager.getCart();
+            await loadCart();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+    <script>
+    // Check login status - Consistent across all pages
+    function checkLoginStatus() {
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+        const authButtons = document.getElementById('auth-buttons');
+        const userInfo = document.getElementById('user-info');
+        
+        if (token && user) {
+            try {
+                const userData = JSON.parse(user);
+                // Hide auth buttons, show user info
+                if (authButtons) authButtons.style.display = 'none';
+                if (userInfo) userInfo.style.display = 'flex';
+                // Update user name and initial
+                const initialEl = document.getElementById('user-initial');
+                const nameEl = document.getElementById('user-name');
+                if (initialEl) initialEl.textContent = userData.name.charAt(0).toUpperCase();
+                if (nameEl) nameEl.textContent = userData.name;
+            } catch (e) {
+                console.error('Error parsing user data:', e);
+                authButtons.style.display = 'flex';
+                userInfo.style.display = 'none';
+            }
+        } else {
+            // Not logged in - show auth buttons, hide user info
+            if (authButtons) authButtons.style.display = 'flex';
+            if (userInfo) userInfo.style.display = 'none';
+        }
+    }
+
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+    } else {
+        checkLoginStatus();
+    }
+
+    setTimeout(checkLoginStatus, 100);
+
+    function logout() {
+        logoutUser();
+    }
+    </script>
+</body>
+</html>

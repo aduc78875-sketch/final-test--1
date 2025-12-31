@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../picture/logo.png">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/toast.css">
+    <link rel="stylesheet" href="../css/checkout.css">
+
+</head>
+<body>
+
+    <div id="qrModal" class="overlay hidden">
+        <div class="qr-box">
+            <div class="qr-content">
+                <img src="picture/QR.png" id="qrImage" class="qr-img" alt="QR Code">
+                <div class="money-display" id="transferAmount">0₫</div>
+            </div>
+            <div class="qr-actions">
+                <button class="btn-confirm-qr" onclick="finishBankTransfer()">Xác nhận thanh toán</button>
+                <button class="btn-cancel-qr" onclick="closeQrModal()">Hủy bỏ</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="successModal" class="overlay hidden">
+        <div class="success-box">
+            <div class="success-icon"><i class="fas fa-check"></i></div>
+            <h2 style="color:var(--brown-btn); margin-bottom:10px;">ĐẶT HÀNG THÀNH CÔNG!</h2>
+            <div id="successMsg" style="color:#666; line-height:1.6; font-size:14px;"></div>
+            <a href="../Project_huce/index.html" class="btn-home">VỀ TRANG CHỦ</a>
+        </div>
+    </div>
+
+    <header class="main-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <a href="../Project_huce/index.html">
+                    <img src="../Project_huce/picture/logo.png" alt="4Dreamer" class="logo-img" onerror="this.style.display='none'"> 
+                    <span class="brand-name">4DreamerCoffee</span>
+                </a>
+            </div>
+
+            <nav class="desktop-nav">
+                <a href="../Project_huce/index.html">Trang Chủ</a>
+                <a href="../Project_huce/shop.html">Cửa Hàng</a>
+                <a href="../Project_huce/news.html">Tin Tức</a>
+                <a href="../Project_huce/contact.html">Liên Hệ</a>
+            </nav>
+
+            <div class="header-actions">
+                <div id="user-info" class="user-account">
+                    <div class="user-profile-badge">
+                        <div class="avatar-circle">
+                            <span id="user-initial">U</span> 
+                        </div>
+                        <div class="user-meta">
+                            <span class="welcome-text">Xin chào,</span>
+                            <span id="user-name" class="user-name-text">User</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+                    </div>
+
+                    <div class="dropdown-menu">
+                        <ul class="d-links">
+                            <li>
+                                <a href="profile.html">
+                                    <i class="fa-regular fa-user"></i> Hồ sơ cá nhân
+                                </a>
+                            </li>
+                            <li>
+                                <a href="orders.html">
+                                    <i class="fa-solid fa-receipt"></i> Đơn mua
+                                </a>
+                            </li>
+                            
+                            <li class="divider"></li> <li>
+                                <a href="#" onclick="logout()" style="color: #c9493d;">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <label for="menu-toggle" class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></label>
+            </div>
+        </div>
+    </header>
+
+    <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu-container">
+        <div class="menu-header">
+            <span class="mobile-logo-text">4Dreamer</span>
+            <label for="menu-toggle" class="close-menu"><i class="fa-solid fa-xmark"></i></label>
+        </div>
+        <ul class="mobile-list">
+            <li><a href="../index.html">Trang Chủ</a></li>
+            <li><a href="shop.html">Cửa Hàng</a></li>
+            <li><a href="news.html">Tin Tức</a></li>
+            <li><a href="contact.html">Liên hệ</a></li>
+        </ul>
+        <div class="mobile-auth-group">
+            <a href="signin.html" class="btn-m-login">Đăng Nhập</a>
+            <a href="signup.html" class="btn-m-signup">Đăng Ký</a>
+        </div>
+    </div>
+
+    <div class="container checkout-wrapper">
+        <div class="checkout-header-title">
+            <h1>Thanh Toán Đơn Hàng</h1>
+        </div>
+
+        <form id="checkoutForm" class="checkout-layout" onsubmit="handleCheckout(event)">
+            
+            <div class="left-section">
+                <div class="checkout-box">
+                    <div class="box-title">
+                        <span>Đơn hàng của bạn</span>
+                        <span id="countItems" style="font-size:14px; background:var(--gold); color:#fff; padding:2px 8px; border-radius:10px;">0</span>
+                    </div>
+                    
+                    <div id="orderItems" class="order-list">
+                        </div>
+
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+                        <div class="discount-box">
+                            <input type="text" class="input-code" placeholder="Nhập mã giảm giá">
+                            <button type="button" class="btn-apply">ÁP DỤNG</button>
+                        </div>
+                        
+                        <div style="margin-top: 20px;">
+                            <div class="summary-row"><span>Tạm tính</span><span id="subTotal" style="font-weight:700">0₫</span></div>
+                            <div class="summary-row"><span>Phí vận chuyển</span><span style="font-weight:700">30.000₫</span></div>
+                            
+                            <div class="total-row">
+                                <span>TỔNG THANH TOÁN</span>
+                                <span class="total-price" id="finalTotal">0₫</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="cart.html" style="font-size:14px; font-weight:600; color:#888; display:flex; justify-content:center; align-items:center; gap:5px; text-decoration:none; margin-top:15px;">
+                    <i class="fas fa-angle-left"></i> Quay lại giỏ hàng
+                </a>
+            </div>
+
+            <div class="right-section">
+                
+                <div class="checkout-box">
+                    <div class="box-title">
+                        <span>Thông tin giao hàng</span>
+                        <i class="fas fa-truck-fast" style="color:var(--gold);"></i>
+                    </div>
+
+                    <div class="row-2-col">
+                        <div class="form-group"><input type="text" class="form-control" placeholder="Họ và tên người nhận" required id="fullname"></div>
+                        <div class="form-group"><input type="tel" class="form-control" placeholder="Số điện thoại" required id="phone"></div>
+                    </div>
+                    <div class="form-group"><input type="email" class="form-control" placeholder="Email (Không bắt buộc)"></div>
+                    <div class="form-group"><input type="text" class="form-control" placeholder="Địa chỉ chi tiết (Số nhà, đường, phường/xã...)" required></div>
+                    <div class="form-group"><textarea class="form-control" placeholder="Ghi chú đơn hàng (VD: Giao giờ hành chính, gọi trước khi giao...)"></textarea></div>
+                </div>
+
+                <div class="checkout-box">
+                    <div class="box-title">
+                        <span>Phương thức thanh toán</span>
+                        <i class="fas fa-credit-card" style="color:var(--gold);"></i>
+                    </div>
+                    
+                    <label class="payment-option active" onclick="selectPayment(this)">
+                        <div class="payment-content">
+                            <i class="fas fa-money-bill-wave"></i> 
+                            <div>
+                                <div>Thanh toán khi nhận hàng (COD)</div>
+                                <div style="font-size:12px; color:#888; font-weight:400; margin-top:3px;">Thanh toán tiền mặt cho shipper khi nhận hàng</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <input type="radio" name="payment" value="cod" checked style="display:none">
+                    </label>
+
+                    <label class="payment-option" onclick="selectPayment(this)">
+                        <div class="payment-content">
+                            <i class="fas fa-qrcode"></i> 
+                            <div>
+                                <div>Chuyển khoản ngân hàng / QR Code</div>
+                                <div style="font-size:12px; color:#888; font-weight:400; margin-top:3px;">Quét mã QR để thanh toán nhanh chóng</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <input type="radio" name="payment" value="bank" style="display:none">
+                    </label>
+
+                    <button type="submit" class="btn-submit-order">
+                        HOÀN TẤT ĐẶT HÀNG <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-block">
+                <h3>4DreamerCoffee</h3>
+                <p style="margin-bottom: 15px;">Đăng ký nhận tin để không bỏ lỡ những ưu đãi ngọt ngào nhất từ chúng tôi.</p>
+                <form class="footer-newsletter">
+                    <input type="email" placeholder="Email của bạn...">
+                    <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+                <div class="socials">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-block">
+                <h3>Giờ Mở Cửa</h3>
+                <ul class="footer-links">
+                    <li><span>Thứ 2 - Thứ 6:</span> <span class="text-gold">07:00 - 22:00</span></li>
+                    <li><span>Thứ 7 - CN:</span> <span class="text-gold">08:00 - 23:00</span></li>
+                    <li><span>Ngày Lễ:</span> <span class="text-gold">Mở cửa cả ngày</span></li>
+                </ul>
+            </div>
+            <div class="footer-block">
+                <h3>Về Chúng Tôi</h3>
+                <ul class="footer-links">
+                    <li><a href="../Project_huce/index.html"><i class="fa-solid fa-angle-right"></i> Trang Chủ</a></li>
+                    <li><a href="../Project_huce/shop.html"><i class="fa-solid fa-angle-right"></i> Cửa Hàng</a></li>
+                    <li><a href="../Project_huce/news.html"><i class="fa-solid fa-angle-right"></i> Tin Tức</a></li>
+                    <li><a href="../Project_huce/contact.html"><i class="fa-solid fa-angle-right"></i> Liên Hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-block">
+                <h3>Liên hệ</h3>
+                <ul class="contact-list">
+                    <li><i class="fa-solid fa-location-dot"></i> 55 Giải Phóng, Hà Nội</li>
+                    <li><i class="fa-solid fa-phone"></i> 090 123 4567</li>
+                    <li><i class="fa-solid fa-envelope"></i> contact@4dreamer.com</li>
+                </ul>
+                <div class="payment-partners">
+                    <p class="pay-title">Chấp nhận thanh toán:</p>
+                    <div class="pay-icons">
+                        <i class="fa-brands fa-cc-visa" title="Visa"></i>
+                        <i class="fa-brands fa-cc-mastercard" title="MasterCard"></i>
+                        <i class="fa-solid fa-wallet" title="Tiền mặt/Chuyển khoản"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright"><p>&copy; 2025 4DreamerCoffee. All rights reserved.</p></div>
+    </footer>
+
+    <script>
+        let currentTotalMoney = 0;
+
+        function removeItem(id) {
+            let checkoutItems = JSON.parse(localStorage.getItem('checkoutItems')) || [];
+            checkoutItems = checkoutItems.filter(item => item.id !== id);
+            localStorage.setItem('checkoutItems', JSON.stringify(checkoutItems));
+            renderOrder();
+            if (typeof toast !== 'undefined' && toast.success) {
+                toast.success('Đã xoá sản phẩm!');
+            } else {
+                alert('Đã xoá sản phẩm!');
+            }
+        }
+
+        function updateQty(id, newQty) {
+            if (newQty < 1) {
+                removeItem(id);
+                return;
+            }
+            let checkoutItems = JSON.parse(localStorage.getItem('checkoutItems')) || [];
+            const item = checkoutItems.find(i => i.id === id);
+            if (item) {
+                item.qty = newQty;
+                localStorage.setItem('checkoutItems', JSON.stringify(checkoutItems));
+                renderOrder();
+            }
+        }
+
+        function renderOrder() {
+            const container = document.getElementById('orderItems');
+            container.innerHTML = '';
+            let subTotal = 0;
+            let shipFee = 30000;
+
+            let cartItems = JSON.parse(localStorage.getItem('checkoutItems')) || [];
+
+            if(cartItems.length === 0) {
+                 container.innerHTML = `
+                    <div style="text-align:center; padding:40px 20px; color:#999;">
+                        <div style="font-size: 48px; margin-bottom: 20px;">
+                            <i class="fas fa-shopping-cart" style="opacity: 0.3;"></i>
+                        </div>
+                        <div style="font-size: 18px; font-weight: 600; margin-bottom: 10px;">Giỏ hàng trống</div>
+                        <div style="font-size: 14px; margin-bottom: 20px;">Bạn chưa chọn sản phẩm nào để thanh toán</div>
+                        <a href="shop.html" style="display: inline-block; background: var(--gold); color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600;">
+                            <i class="fas fa-arrow-left"></i> Quay lại cửa hàng
+                        </a>
+                    </div>
+                 `;
+                 document.getElementById('countItems').innerText = '0';
+                 document.getElementById('subTotal').innerText = '₫0';
+                 document.getElementById('finalTotal').innerText = '₫' + shipFee.toLocaleString('vi-VN');
+                 currentTotalMoney = shipFee;
+                 return;
+            }
+
+            cartItems.forEach(item => {
+                subTotal += item.price * item.qty;
+                container.innerHTML += `
+                    <div class="order-item">
+                        <img src="${item.image}" class="item-img" onerror="this.src='https://via.placeholder.com/70'">
+                        <div class="item-info">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-meta">Phân loại: ${item.cat || 'Mặc định'}</div>
+                            <div class="item-price">₫${item.price.toLocaleString('vi-VN')}</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="qty-control" style="display: flex; align-items: center; border: 1px solid #ddd; border-radius: 8px; padding: 4px 8px;">
+                                <button type="button" onclick="updateQty(${item.id}, ${item.qty - 1})" style="border: none; background: none; cursor: pointer; font-size: 16px; padding: 0 4px;">−</button>
+                                <span style="min-width: 30px; text-align: center; font-weight: 600;">${item.qty}</span>
+                                <button type="button" onclick="updateQty(${item.id}, ${item.qty + 1})" style="border: none; background: none; cursor: pointer; font-size: 16px; padding: 0 4px;">+</button>
+                            </div>
+                            <button type="button" onclick="removeItem(${item.id})" style="border: none; background: none; color: #d32f2f; cursor: pointer; font-size: 18px; padding: 4px 8px;">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>`;
+            });
+
+            document.getElementById('countItems').innerText = cartItems.length;
+            document.getElementById('subTotal').innerText = '₫' + subTotal.toLocaleString('vi-VN');
+            currentTotalMoney = subTotal + shipFee;
+            document.getElementById('finalTotal').innerText = '₫' + currentTotalMoney.toLocaleString('vi-VN');
+        }
+
+        function selectPayment(element) {
+            document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            const radio = element.querySelector('input[type="radio"]');
+            radio.checked = true;
+            
+            const btn = document.querySelector('.btn-submit-order');
+            if(radio.value === 'cod') {
+                btn.innerHTML = "HOÀN TẤT ĐẶT HÀNG (COD) <i class='fas fa-arrow-right'></i>";
+            } else {
+                btn.innerHTML = "QUÉT MÃ THANH TOÁN <i class='fas fa-qrcode'></i>";
+            }
+        }
+
+        function handleCheckout(e) {
+            e.preventDefault();
+            
+            let checkoutItems = JSON.parse(localStorage.getItem('checkoutItems')) || [];
+            if (checkoutItems.length === 0) {
+                if (typeof toast !== 'undefined' && toast.error) {
+                    toast.error('Đơn thanh toán của bạn chưa có gì! Hãy mua thêm sản phẩm trong giỏ hàng.');
+                } else {
+                    alert('Đơn thanh toán của bạn chưa có gì! Hãy mua thêm sản phẩm trong giỏ hàng.');
+                }
+                return;
+            }
+            
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            
+            const name = document.getElementById('fullname').value;
+            const phone = document.getElementById('phone').value;
+            if(!name || !phone) {
+                if (typeof toast !== 'undefined' && toast.error) {
+                    toast.error("Vui lòng nhập đầy đủ họ tên và số điện thoại!");
+                } else {
+                    alert("Vui lòng nhập đầy đủ họ tên và số điện thoại!");
+                }
+                return;
+            }
+
+            if (paymentMethod === 'bank') showQrPopup();
+            else showSuccessPopup();
+        }
+
+        function showQrPopup() {
+            document.getElementById('qrImage').src = "picture/QR.png"; 
+            document.getElementById('transferAmount').innerText = '₫' + currentTotalMoney.toLocaleString('vi-VN');
+            document.getElementById('qrModal').classList.remove('hidden');
+        }
+
+        function closeQrModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+        }
+
+        function finishBankTransfer() {
+            closeQrModal();
+            showSuccessPopup();
+        }
+
+        function showSuccessPopup() {
+            const name = document.getElementById('fullname').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.querySelector('input[placeholder="Địa chỉ chi tiết (Số nhà, đường, phường/xã...)"]').value;
+            const msg = `Cảm ơn <b>${name}</b> đã tin tưởng 4Dreamer!<br>Đơn hàng trị giá <b>${document.getElementById('finalTotal').innerText}</b> đang được xử lý.<br>Chúng tôi sẽ liên hệ qua SĐT <b>${phone}</b> để xác nhận.`;
+            
+            document.getElementById('successMsg').innerHTML = msg;
+            
+            // Lưu đơn hàng vào localStorage
+            let cartItems = JSON.parse(localStorage.getItem('checkoutItems')) || [];
+            saveOrderToLocalStorage(name, phone, address, cartItems);
+            
+            // Xóa dữ liệu checkout
+            localStorage.removeItem('checkoutItems');
+            
+            document.getElementById('successModal').classList.remove('hidden');
+        }
+
+        function saveOrderToLocalStorage(name, phone, address, cartItems) {
+            const user = localStorage.getItem('user');
+            if (!user) return;
+            
+            const currentUser = JSON.parse(user);
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            
+            const order = {
+                id: Date.now(),
+                user_id: currentUser.id,
+                user_name: currentUser.name,
+                user_email: currentUser.email,
+                items: cartItems,
+                total_price: currentTotalMoney,
+                status: 'pending',
+                delivery_name: name,
+                delivery_phone: phone,
+                delivery_address: address,
+                created_at: new Date().toISOString()
+            };
+            
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+        }
+
+        renderOrder();
+    </script>
+    <script src="../js/toast.js"></script>
+    <script>
+    // Check login status - Consistent across all pages
+    function checkLoginStatus() {
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+        const authButtons = document.getElementById('auth-buttons');
+        const userInfo = document.getElementById('user-info');
+        
+        if (token && user) {
+            try {
+                const userData = JSON.parse(user);
+                // Hide auth buttons, show user info
+                if (authButtons) authButtons.style.display = 'none';
+                if (userInfo) userInfo.style.display = 'flex';
+                // Update user name and initial
+                const initialEl = document.getElementById('user-initial');
+                const nameEl = document.getElementById('user-name');
+                if (initialEl) initialEl.textContent = userData.name.charAt(0).toUpperCase();
+                if (nameEl) nameEl.textContent = userData.name;
+            } catch (e) {
+                console.error('Error parsing user data:', e);
+                authButtons.style.display = 'flex';
+                userInfo.style.display = 'none';
+            }
+        } else {
+            // Not logged in - show auth buttons, hide user info
+            if (authButtons) authButtons.style.display = 'flex';
+            if (userInfo) userInfo.style.display = 'none';
+        }
+    }
+
+    // Run on page load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+    } else {
+        checkLoginStatus();
+    }
+    // Safety check after short delay
+    setTimeout(checkLoginStatus, 100);
+
+    function logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        toast.success('Đã đăng xuất!');
+        setTimeout(() => {
+            window.location.href = '../index.html';
+        }, 1000);
+    }
+    </script>
+</body>
+</html>

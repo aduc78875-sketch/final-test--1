@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cửa Hàng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../picture/logo.png">
+    
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/toast.css">
+    <link rel="stylesheet" href="../css/shop.css">
+</head>
+<body>
+
+    <div class="toast-overlay">
+        <div class="toast-box" id="toast">
+            <i class="fas fa-check-circle"></i>
+            <div>Đã thêm vào giỏ hàng!</div>
+        </div>
+    </div>
+
+    <header class="main-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <a href="../Project_huce/index.html">
+                    <img src="../Project_huce/picture/logo.png" alt="4Dreamer" class="logo-img" onerror="this.style.display='none'"> 
+                    <span class="brand-name">4DreamerCoffee</span>
+                </a>
+            </div>
+
+            <nav class="desktop-nav">
+                <a href="../Project_huce/index.html">Trang Chủ</a>
+                <a href="../Project_huce/shop.html" class="active">Cửa Hàng</a>
+                <a href="../Project_huce/news.html">Tin Tức</a>
+                <a href="../Project_huce/contact.html">Liên Hệ</a>
+            </nav>
+
+            <div class="header-actions">
+                <div id="auth-buttons" style="display: flex; gap: 15px; align-items: center;">
+                    <a href="../Project_huce/signin.html" class="btn-login">Đăng nhập</a>
+                    <a href="../Project_huce/signup.html" class="btn-signup">Đăng ký</a>
+                </div>
+
+                <div id="user-info" class="user-account" style="display: none;">
+                    <div class="user-profile-badge">
+                        <div class="avatar-circle">
+                            <span id="user-initial">U</span> 
+                        </div>
+                        <div class="user-meta">
+                            <span class="welcome-text">Xin chào,</span>
+                            <span id="user-name" class="user-name-text">User</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+                    </div>
+
+                    <div class="dropdown-menu">
+                        <ul class="d-links">
+                            <li>
+                                <a href="profile.html">
+                                    <i class="fa-regular fa-user"></i> Hồ sơ cá nhân
+                                </a>
+                            </li>
+                            <li>
+                                <a href="orders.html">
+                                    <i class="fa-solid fa-receipt"></i> Đơn mua
+                                </a>
+                            </li>
+                            
+                            <li class="divider"></li> <li>
+                                <a href="#" onclick="logout()" style="color: #c9493d;">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <label for="menu-toggle" class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></label>
+            </div>
+        </div>
+    </header>
+
+    <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu-container">
+        <div class="menu-header">
+            <span class="mobile-logo-text">4Dreamer</span>
+            <label for="menu-toggle" class="close-menu"><i class="fa-solid fa-xmark"></i></label>
+        </div>
+        <ul class="mobile-list">
+            <li><a href="../Project_huce/index.html">Trang Chủ</a></li>
+            <li><a href="../Project_huce/shop.html" style="color:var(--gold)">Cửa Hàng</a></li>
+            <li><a href="../Project_huce/news.html">Tin Tức</a></li>
+            <li><a href="../Project_huce/contact.html">Liên hệ</a></li>
+        </ul>
+        <div id="mobile-auth-group" class="mobile-auth-group">
+            <a href="../Project_huce/signin.html" class="btn-m-login">Đăng Nhập</a>
+            <a href="../Project_huce/signup.html" class="btn-m-signup">Đăng Ký</a>
+        </div>
+        <div id="mobile-user-group" class="mobile-auth-group" style="display: none; flex-direction: column; gap: 10px;">
+            <a href="profile.html" class="btn-m-login">Hồ sơ cá nhân</a>
+            <a href="orders.html" class="btn-m-login">Đơn mua</a>
+            <a href="#" onclick="logout()" class="btn-m-signup" style="color: #c9493d;">Đăng Xuất</a>
+        </div>
+    </div>
+
+    <section class="shop-banner">
+        <div class="banner-content">
+            <h1 class="banner-title animate-up">Cửa Hàng Trực Tuyến</h1>
+            <p class="banner-sub animate-up delay-1">Mang hương vị cà phê chuẩn 4Dreamer về nhà</p>
+        </div>
+    </section>
+
+    <div class="container main-layout">
+        <aside class="filter-panel">
+            <div class="filter-header">
+                <i class="fas fa-filter"></i> BỘ LỌC
+                <a href="../Project_huce/cart.html" class="cart-btn-wrap" title="Giỏ hàng" style="margin-left: auto; font-size: 18px;">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-search-box">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm..." onkeyup="filterProducts()">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="filter-controls">
+                <label style="font-size:14px; font-weight:600;">Danh mục</label>
+                <select id="categorySelect" class="custom-select" onchange="changeCategory(this.value)">
+                    <option value="all">Tất cả sản phẩm</option>
+                    <option value="hat">Cà phê hạt</option>
+                    <option value="may">Máy pha chế</option>
+                    <option value="dungcu">Dụng cụ</option>
+                    <option value="nguyenlieu">Nguyên liệu</option>
+                </select>
+
+                <label style="font-size:14px; font-weight:600;">Khoảng giá</label>
+                <select class="custom-select" id="priceSelect" onchange="filterProducts()">
+                    <option value="all">Tất cả</option>
+                    <option value="0-50000">Dưới 50.000₫</option>
+                    <option value="50000-150000">50k - 150k</option>
+                    <option value="150000-500000">150k - 500k</option>
+                    <option value="500000-10000000">Trên 500k</option>
+                </select>
+                
+                <label style="font-size:14px; font-weight:600;">Sắp xếp</label>
+                <select id="sortSelect" class="custom-select" onchange="changeSortFromSelect(this.value)">
+                    <option value="popular-desc">Phổ biến nhất</option>
+                    <option value="newest-desc">Mới nhất</option>
+                    <option value="price-asc">Giá: Thấp đến Cao</option>
+                    <option value="price-desc">Giá: Cao đến Thấp</option>
+                </select>
+            </div>
+        </aside>
+
+        <section class="product-section">
+            <div class="product-grid" id="productGrid">
+                </div>
+            
+            <div class="pagination" id="pagination">
+                </div>
+        </section>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-block">
+                <h3>4Dreamer Coffee</h3>
+                <p style="margin-bottom: 15px;">Đăng ký nhận tin để không bỏ lỡ những ưu đãi ngọt ngào nhất từ chúng tôi.</p>
+                <form class="footer-newsletter">
+                    <input type="email" placeholder="Email của bạn...">
+                    <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+                <div class="socials">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-block">
+                <h3>Giờ Mở Cửa</h3>
+                <ul class="footer-links">
+                    <li><span>Thứ 2 - Thứ 6:</span> <span class="text-gold">07:00 - 22:00</span></li>
+                    <li><span>Thứ 7 - CN:</span> <span class="text-gold">08:00 - 23:00</span></li>
+                    <li><span>Ngày Lễ:</span> <span class="text-gold">Mở cửa cả ngày</span></li>
+                </ul>
+            </div>
+            <div class="footer-block">
+                <h3>Về Chúng Tôi</h3>
+                <ul class="footer-links">
+                    <li><a href="../Project_huce/index.html"><i class="fa-solid fa-angle-right"></i> Trang Chủ</a></li>
+                    <li><a href="../Project_huce/shop.html"><i class="fa-solid fa-angle-right"></i> Cửa Hàng</a></li>
+                    <li><a href="../Project_huce/news.html"><i class="fa-solid fa-angle-right"></i> Tin Tức</a></li>
+                    <li><a href="../Project_huce/contact.html"><i class="fa-solid fa-angle-right"></i> Liên Hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-block">
+                <h3>Liên hệ</h3>
+                <ul class="contact-list">
+                    <li><i class="fa-solid fa-location-dot"></i> 55 Giải Phóng, Hà Nội</li>
+                    <li><i class="fa-solid fa-phone"></i> 090 123 4567</li>
+                    <li><i class="fa-solid fa-envelope"></i> contact@4dreamer.com</li>
+                </ul>
+                <div class="payment-partners">
+                    <p class="pay-title">Chấp nhận thanh toán:</p>
+                    <div class="pay-icons">
+                        <i class="fa-brands fa-cc-visa" title="Visa"></i>
+                        <i class="fa-brands fa-cc-mastercard" title="MasterCard"></i>
+                        <i class="fa-solid fa-wallet" title="Tiền mặt/Chuyển khoản"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright"><p>&copy; 2025 4DreamerCoffee. All rights reserved.</p></div>
+    </footer>
+
+    <script>
+        const cartManager = {
+            getCartKey: function() {
+                const token = localStorage.getItem('token');
+                const user = localStorage.getItem('user');
+                
+                if (token && user) {
+                    try {
+                        const userData = JSON.parse(user);
+                        return `cart_user_${userData.id}`;
+                    } catch (e) {
+                        return 'cart_anonymous';
+                    }
+                }
+                return 'cart_anonymous';
+            },
+            
+            getCart: async function() {
+                try {
+                    const cartKey = this.getCartKey();
+                    const cart = localStorage.getItem(cartKey);
+                    return cart ? JSON.parse(cart) : [];
+                } catch (e) {
+                    console.error('Error getting cart:', e);
+                    return [];
+                }
+            },
+            
+            addToCart: async function(productId, quantity) {
+                try {
+                    let cart = await this.getCart();
+                    const existingItem = cart.find(item => item.product_id === productId);
+                    
+                    if (existingItem) {
+                        existingItem.quantity += quantity;
+                    } else {
+                        cart.push({
+                            product_id: productId,
+                            quantity: quantity,
+                            added_at: new Date().toISOString()
+                        });
+                    }
+                    
+                    const cartKey = this.getCartKey();
+                    localStorage.setItem(cartKey, JSON.stringify(cart));
+                    return { success: true };
+                } catch (error) {
+                    console.error('Error adding to cart:', error);
+                    return { success: false, message: error.message };
+                }
+            },
+            
+            removeFromCart: async function(productId) {
+                try {
+                    let cart = await this.getCart();
+                    cart = cart.filter(item => item.product_id !== productId);
+                    const cartKey = this.getCartKey();
+                    localStorage.setItem(cartKey, JSON.stringify(cart));
+                    return { success: true };
+                } catch (error) {
+                    console.error('Error removing from cart:', error);
+                    return { success: false, message: error.message };
+                }
+            },
+            
+            updateQuantity: async function(productId, quantity) {
+                try {
+                    let cart = await this.getCart();
+                    const item = cart.find(c => c.product_id === productId);
+                    if (item) {
+                        if (quantity <= 0) {
+                            cart = cart.filter(c => c.product_id !== productId);
+                        } else {
+                            item.quantity = quantity;
+                        }
+                        const cartKey = this.getCartKey();
+                        localStorage.setItem(cartKey, JSON.stringify(cart));
+                    }
+                    return { success: true };
+                } catch (error) {
+                    console.error('Error updating quantity:', error);
+                    return { success: false, message: error.message };
+                }
+            },
+            
+            clearCart: async function() {
+                try {
+                    const cartKey = this.getCartKey();
+                    localStorage.setItem(cartKey, JSON.stringify([]));
+                    return { success: true };
+                } catch (error) {
+                    console.error('Error clearing cart:', error);
+                    return { success: false, message: error.message };
+                }
+            },
+            
+            migrateCartOnLogin: async function(userId) {
+                try {
+                    const anonymousCart = localStorage.getItem('cart_anonymous');
+                    
+                    if (anonymousCart) {
+                        const anonymousItems = JSON.parse(anonymousCart);
+                        const userCartKey = `cart_user_${userId}`;
+                        let userCart = [];
+                        
+                        const existingUserCart = localStorage.getItem(userCartKey);
+                        if (existingUserCart) {
+                            userCart = JSON.parse(existingUserCart);
+                        }
+                        
+                        anonymousItems.forEach(aItem => {
+                            const existingUserItem = userCart.find(uItem => uItem.product_id === aItem.product_id);
+                            if (existingUserItem) {
+                                existingUserItem.quantity += aItem.quantity;
+                            } else {
+                                userCart.push(aItem);
+                            }
+                        });
+                        
+                        localStorage.setItem(userCartKey, JSON.stringify(userCart));
+
+                        localStorage.removeItem('cart_anonymous');
+                    }
+                } catch (error) {
+                    console.error('Error migrating cart on login:', error);
+                }
+            }
+        };
+        
+        let products = [];
+        let currentPage = 1;
+        let itemsPerPage = 6;
+        let currentCategory = 'all';
+        let currentFilteredList = [];
+        let toastTimeout;
+        
+        function loadProducts() {
+            products = [
+                { id: 1, name: "Cà phê Robusta Nguyên Chất 500g Đậm Vị", price: 145000, sold: "12k", cat: "hat", image: "../Project_huce/picture/cafe-robusta-la-gi-2.jpg", date: "2025-08-10", desc: "Cà phê Robusta hạt rang nguyên chất từ vùng cao nguyên Lâm Đồng. Hương vị đậm đà, mạnh mẽ với vị hơi đắng tự nhiên. Phù hợp pha phin truyền thống hoặc làm cà phê đen đôi. Bảo quản tốt trong túi zip không khí." },
+                { id: 4, name: "Hạt Arabica Cầu Đất 250g Hương Trái Cây", price: 110000, sold: "1.2k", cat: "hat", image: "../Project_huce/picture/arabica.webp", date: "2025-09-15", desc: "Hạt Arabica cao cấp từ Cầu Đất, Lâm Đồng với hương trái cây tự nhiên. Vị nhẹ nhàng, hơi chua dịu, kết hợp với vị ngọt tự nhiên. Thích hợp pha máy Espresso hoặc pour over. Hạt rang vừa phù hợp cho mọi loại máy." },
+                { id: 7, name: "Combo 1kg Cà Phê Blend (Rob + Ara)", price: 290000, sold: "5k", cat: "hat", image: "../Project_huce/picture/1kg-cafe.webp", date: "2025-07-01", desc: "Combo blend 1kg gồm 500g Robusta và 500g Arabica. Cân bằng hoàn hảo giữa hương mạnh của Robusta và vị tế nhạt của Arabica. Phù hợp mọi cách pha chế. Tiết kiệm so với mua riêng." },
+                { id: 16, name: "Cà phê Arabica Đà Lạt 250g Vị Nhẹ Nhàng", price: 125000, sold: "2.3k", cat: "hat", image: "../Project_huce/picture/cafe-robusta-tron-arabica-da-lat-uong-ngon.jpg", date: "2025-10-18", desc: "Hạt Arabica từ Đà Lạt với hương vị nhẹ nhàng, chua dễ chịu. Rang vừa phù hợp cho mọi máy pha. Hương ghi chú trái cây, hoa, hơi ngọt tự nhiên. Là lựa chọn tốt cho những người mới bắt đầu uống cà phê specialty." },
+                { id: 17, name: "Cà phê Blend Chuẩn Espresso 1kg", price: 380000, sold: "3.8k", cat: "hat", image: "../Project_huce/picture/blend-coffee.webp", date: "2025-11-05", desc: "Blend đặc biệt để pha Espresso gồm 60% Robusta, 40% Arabica. Tạo crema dày, vị cân bằng, hương đậm, vị hơi ngọt. Lý tưởng cho những ai yêu thích Espresso traditional." },
+                { id: 18, name: "Cà phê Robusta Buôn Mê Thuột 500g", price: 155000, sold: "1.8k", cat: "hat", image: "../Project_huce/picture/robusta.jpg", date: "2025-09-22", desc: "Cà phê Robusta nguyên chất từ Buôn Mê Thuột, Đắk Lắk. Vị đắng tự nhiên, hương mạnh, đậm đà. Phù hợp pha phin truyền thống, tạo cà phê đen đậm khỏe khoắn. Bảo quản tốt, không có mùi chua bù." },
+                { id: 19, name: "Cà phê Weasel (Cà Phê Chồn) 100g", price: 320000, sold: "280", cat: "hat", image: "../Project_huce/picture/chon-cafe.webp", date: "2025-08-14", desc: "Cà phê Weasel 100% nguyên chất từ Lâm Đồng, Việt Nam. Hương thơm độc đáo, vị mịn, ít đắng. Sản phẩm hiếm, giới hạn, được chọn lọc kỹ. Phù hợp làm quà tặng hoặc dùng vào những dịp đặc biệt." },
+                { id: 20, name: "Cà phê Arabica Single Origin Bắc Giang", price: 195000, sold: "580", cat: "hat", image: "../Project_huce/picture/bg.webp", date: "2025-07-30", desc: "Arabica Single Origin từ Bắc Giang với hương vị độc đáo. Ghi chú vani, sô cô la, đất, hoa. Rang nhạt, phù hợp pour over, French press. Sản phẩm cao cấp cho những người yêu thích khám phá cà phê." },
+                { id: 21, name: "Cà phê Blend Nhẹ Nhàng (60% Ara + 40% Rob)", price: 165000, sold: "2.5k", cat: "hat", image: "../Project_huce/picture/3.webp", date: "2025-10-11", desc: "Blend riêng của chúng tôi với tỷ lệ 60% Arabica, 40% Robusta. Vị nhẹ nhàng, hương thơm, ít đắng. Phù hợp pha phin, máy Moka, latte. Giá hợp lý cho mọi khách hàng." },
+                { id: 22, name: "Cà phê Robusta Rang Xém 500g", price: 135000, sold: "4.2k", cat: "hat", image: "../Project_huce/picture/4.webp", date: "2025-11-20", desc: "Robusta rang xém nhẹ, giữ nguyên hương thơm tự nhiên. Vị vừa phải, hơi ngọt, không quá đắng. Phù hợp pha phin, máy pha Espresso, French press. Lựa chọn tốt cho những người không thích vị quá đắng." },
+                { id: 23, name: "Cà phê Arabica Moka Java Blend 250g", price: 145000, sold: "920", cat: "hat", image: "../Project_huce/picture/5.webp", date: "2025-09-08", desc: "Blend Moka Java kết hợp giữa cà phê từ Sumatra và Yemen. Vị phức tạp, đất, hoa, hơi chua dịu. Hương tuyệt vời khi pha pour over hoặc Aeropress. Sản phẩm truyền thống, được ưa chuộng lâu đời." },
+                { id: 24, name: "Cà phê Phin - Cà phê Đã Xay Sẵn 250g", price: 85000, sold: "6.8k", cat: "hat", image: "../Project_huce/picture/6.webp", date: "2025-12-01", desc: "Cà phê đã xay sẵn chuyên dùng cho phin truyền thống. Hạt xay độ mịn vừa phải, không quá mịn cũng không quá thô. Tiện lợi khi không có máy xay. Giữ độ tươi 3-4 tháng." },
+                { id: 2, name: "Máy Pha Cà Phê Espresso Gia Đình Tiện Lợi", price: 1699000, sold: "532", cat: "may", image: "../Project_huce/picture/máy-pha-cà-phê.jpg", date: "2025-05-03", desc: "Máy pha Espresso chuyên nghiệp cho gia đình với công nghệ máy bơm 9 bar. Dung tích boiler 1.5L, làm nóng nhanh chỉ 30 giây. Tương thích với các loại cà phê khác nhau. Thiết kế thép không gỉ bền bỉ." },
+                { id: 3, name: "Phin Cà Phê Nhôm Cao Cấp Màu Đen Bóng", price: 25000, sold: "9k", cat: "dungcu", image: "../Project_huce/picture/phin-cafe.avif", date: "2025-11-01", desc: "Phin cà phê truyền thống kiểu Việt nam bằng nhôm cao cấp. Chế tác tỉ mỉ, dễ sử dụng và vệ sinh. Thiết kế nhỏ gọn phù hợp chuẩn ly 6-8oz. Tạo nên ly cà phê đen đậm đà, hương thơm đặc trưng." },
+                { id: 5, name: "Ca Đánh Sữa Inox 350ml Vạch Chia", price: 89000, sold: "2.1k", cat: "dungcu", image: "../Project_huce/picture/ca-đánh-sữa.webp", date: "2025-06-20", desc: "Ca đánh sữa bằng thép không gỉ cao cấp dung tích 350ml. Có vạch chia để dễ đo lường. Thiết kế mỏ tròn chính xác, tay cầm bảo ôn. Phù hợp làm cà phê latte, cappuccino, flat white." },
+                { id: 6, name: "Máy Xay Cà Phê Hạt Bằng Tay Cối Gỗ", price: 350000, sold: "450", cat: "may", image: "../Project_huce/picture/máy-xay-cafe.jpg", date: "2025-04-12", desc: "Máy xay cà phê bằng tay cổ điển với cối gỗ tự nhiên. Thiết kế sang trọng, không cần điện. Có thể điều chỉnh độ mịn của bột từ thô đến mịn. Dung tích 50g, phù hợp cho 3-4 tách cà phê." },
+                { id: 8, name: "Giấy Lọc Cà Phê V60 Hario (100 tờ)", price: 120000, sold: "800", cat: "dungcu", image: "../Project_huce/picture/giay-loc-cafe.webp", date: "2025-10-02", desc: "Giấy lọc V60 chính hãng Hario bộ 100 tờ. Giấy trắng cao cấp, không có mùi lạ. Phù hợp với dripper V60 kích cỡ 1-4 cups. Tạo tách cà phê sạch, nguyên bản hương vị." },
+                { id: 9, name: "Cân Tiểu Ly Điện Tử Có Timer", price: 250000, sold: "3k", cat: "dungcu", image: "../Project_huce/picture/can-tieu-ly-dien-tu.jpg", date: "2025-03-30", desc: "Cân điện tử chuyên dụng cho cà phê với timer tích hợp. Độ chính xác 0.1g, dung tích tối đa 3kg. Hiển thị LCD rõ ràng. Pin sạc USB, sử dụng được lâu dài. Bắt buộc cho những người pha specialty coffee." },
+                { id: 10, name: "Bình Ngâm Cold Brew Hario 1L", price: 450000, sold: "120", cat: "may", image: "../Project_huce/picture/binh-pha-coldbrew.webp", date: "2025-02-14", desc: "Bình ngâm cold brew chính hãng Hario dung tích 1L. Làm từ thủy tinh borosilicate chịu nhiệt tốt. Thiết kế đẹp mỹ, có quai cầm. Có thể ngâm từ 8-24 giờ để tạo cold brew đậm đà, mước khoái khẩu." },
+                { id: 11, name: "Siro Caramel 700ml Pháp", price: 185000, sold: "200", cat: "nguyenlieu", image: "../Project_huce/picture/siro-caramel.jpg", date: "2025-09-30", desc: "Siro Caramel nhập khẩu từ Pháp, dung tích 700ml. Hương vị caramel đậm đà, tự nhiên không có hương nhân tạo. Thích hợp thêm vào cà phê, trà, nước uống. Lưu trữ được lâu." },
+                { id: 12, name: "Bột Cacao Nguyên Chất 500g", price: 95000, sold: "600", cat: "nguyenlieu", image: "../Project_huce/picture/cacao.jpg", date: "2025-01-10", desc: "Bột cacao nguyên chất 100% từ cacao hảo hạng, dung tích 500g. Không chứa đường, không chất bảo quản. Hương cacao thơm ngon tự nhiên. Phù hợp làm cà phê mocha hoặc các đồ uống khác." },
+                { id: 13, name: "Ly Giữ Nhiệt Inox 500ml Khắc Tên", price: 120000, sold: "4k", cat: "dungcu", image: "../Project_huce/picture/ly-giu-nhiet.webp", date: "2025-12-01", desc: "Ly giữ nhiệt bằng thép không gỉ dung tích 500ml. Giữ nóng tới 12 giờ, giữ lạnh tới 24 giờ. Có nắp thép kín chặt, không rò rỉ. Có thể khắc tên hoặc logo theo yêu cầu." },
+                { id: 14, name: "Bộ Ấm Trà Sứ Trắng Phong Cách Bắc Âu", price: 550000, sold: "80", cat: "dungcu", image: "../Project_huce/picture/am-chen.webp", date: "2025-06-05", desc: "Bộ ấm trà sứ trắng gồm ấm và 4 chén, thiết kế tối giản bắc âu. Sứ porcelain chất lượng cao, sáng bóng. Phù hợp phục vụ cà phê espresso hoặc trà cao cấp. Sang trọng, lịch sự cho khách quý." },
+                { id: 15, name: "Sữa Đặc Ngôi Sao Phương Nam (Thùng 24 lon)", price: 480000, sold: "100", cat: "nguyenlieu", image: "../Project_huce/picture/sua-dac.jpg", date: "2025-08-25", desc: "Sữa đặc Ngôi Sao Phương Nam thùng 24 lon x 397g. Sữa đặc ngon, béo mịn. Thích hợp pha cà phê sữa theo kiểu Việt nam. Bảo quản được lâu, gọn nhẹ, giá tốt." },
+            ];
+            localStorage.setItem('products', JSON.stringify(products));
+            filterProducts();
+            updateBadge();
+        }
+
+        function renderProducts(list) {
+            const grid = document.getElementById('productGrid');
+            const pagination = document.getElementById('pagination');
+            
+            grid.innerHTML = '';
+            pagination.innerHTML = '';
+            
+            if(list.length === 0) {
+                grid.innerHTML = '<div style="grid-column: span 3; text-align:center; padding: 40px; color: #888;">Không tìm thấy sản phẩm!</div>';
+                return;
+            }
+
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageItems = list.slice(start, end);
+
+            pageItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-img" onclick="window.location.href='detail.html?id=${item.id}'">
+                        <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/200?text=No+Image'">
+                    </div>
+                    <div class="card-info">
+                        <div>
+                            <div class="card-name" onclick="window.location.href='detail.html?id=${item.id}'">${item.name}</div>
+                            <div class="card-meta">
+                                <div class="card-price">₫${item.price.toLocaleString('vi-VN')}</div>
+                                <div class="card-sold">Đã bán ${item.sold}</div>
+                            </div>
+                        </div>
+                        <button class="btn-add-cart" onclick="addToCart(${item.id})">
+                            <i class="fas fa-cart-plus"></i> THÊM VÀO GIỎ
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            const totalPages = Math.ceil(list.length / itemsPerPage);
+            if (totalPages > 1) {
+                const prevBtn = document.createElement('button');
+                prevBtn.innerHTML = '<i class="fas fa-angle-left"></i>';
+                prevBtn.className = `page-btn ${currentPage === 1 ? 'disabled' : ''}`;
+                prevBtn.disabled = currentPage === 1;
+                prevBtn.onclick = () => changePage(currentPage - 1);
+                pagination.appendChild(prevBtn);
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement('button');
+                    btn.innerText = i;
+                    btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                    btn.onclick = () => changePage(i);
+                    pagination.appendChild(btn);
+                }
+
+                const nextBtn = document.createElement('button');
+                nextBtn.innerHTML = '<i class="fas fa-angle-right"></i>';
+                nextBtn.className = `page-btn ${currentPage === totalPages ? 'disabled' : ''}`;
+                nextBtn.disabled = currentPage === totalPages;
+                nextBtn.onclick = () => changePage(currentPage + 1);
+                pagination.appendChild(nextBtn);
+            }
+        }
+
+        function changePage(page) {
+            currentPage = page;
+            renderProducts(currentFilteredList);
+            document.querySelector('.shop-banner').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) {
+                showToastError('Không tìm thấy sản phẩm!');
+                return;
+            }
+
+            try {
+                const result = await cartManager.addToCart(id, 1);
+                if (result.success) {
+                    updateBadge();
+                    showToast();
+                } else {
+                    showToastError(result.message || 'Lỗi thêm vào giỏ hàng!');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showToastError('Lỗi: ' + error.message);
+            }
+        }
+
+        async function updateBadge() {
+            try {
+                const items = await cartManager.getCart();
+                document.getElementById('cartBadge').innerText = items.length;
+            } catch (error) {
+                console.error('Error updating badge:', error);
+            }
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 1500);
+        }
+
+        function showToastError(message) {
+            const toast = document.getElementById('toast');
+            toast.innerHTML = '<i class="fas fa-times-circle"></i><div>' + message + '</div>';
+            toast.style.background = '#ff4444';
+            toast.classList.add('show');
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => { 
+                toast.classList.remove('show');
+                toast.style.background = '#4CAF50';
+                toast.innerHTML = '<i class="fas fa-check-circle"></i><div>Đã thêm vào giỏ hàng!</div>';
+            }, 1500);
+        }
+
+        let sortCriterion = 'popular';
+        let sortDir = 'desc';
+
+        function sortProducts(list) {
+            const arr = list.slice();
+            if (sortCriterion === 'price') {
+                arr.sort((a,b) => sortDir === 'asc' ? a.price - b.price : b.price - a.price);
+            } else if (sortCriterion === 'newest') {
+                arr.sort((a,b) => new Date(b.date) - new Date(a.date));
+            }
+            return arr;
+        }
+
+        function filterProducts() {
+            const searchInput = document.getElementById('searchInput');
+            const searchInputMobile = document.getElementById('searchInputMobile');
+            
+            let search = '';
+            if (searchInput && searchInput.value) {
+                search = searchInput.value.toLowerCase();
+            } else if (searchInputMobile && searchInputMobile.value) {
+                search = searchInputMobile.value.toLowerCase();
+            }
+            
+            const priceOption = document.getElementById('priceSelect').value;
+            let min = 0;
+            let max = Infinity;
+
+            if (priceOption !== 'all') {
+                const parts = priceOption.split('-');
+                min = parseInt(parts[0]);
+                max = parseInt(parts[1]);
+            }
+            
+            const filtered = products.filter(p => {
+                const catMatch = currentCategory === 'all' || p.cat === currentCategory;
+                const priceMatch = p.price >= min && p.price <= max;
+                const searchMatch = p.name.toLowerCase().includes(search);
+                return catMatch && priceMatch && searchMatch;
+            });
+            
+            currentFilteredList = sortProducts(filtered);
+            currentPage = 1;
+            renderProducts(currentFilteredList);
+        }
+
+        function changeCategory(cat) {
+            currentCategory = cat;
+            filterProducts();
+        }
+
+        function changeSortFromSelect(val) {
+            if (!val) return;
+            const parts = val.split('-');
+            sortCriterion = parts[0] || 'popular';
+            sortDir = parts[1] || 'desc';
+            filterProducts();
+        }
+
+        loadProducts(); 
+    </script>
+    <script src="../Project_huce/js/notification.js"></script>
+    <script src="../Project_huce/js/cart.js"></script>
+    <script src="../Project_huce/js/toast.js"></script>
+    <script src="../Project_huce/js/auth-helper.js"></script>
+    <script>
+
+    function checkLoginStatus() {
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+        const authButtons = document.getElementById('auth-buttons');
+        const userInfo = document.getElementById('user-info');
+        const mobileAuthGroup = document.getElementById('mobile-auth-group');
+        const mobileUserGroup = document.getElementById('mobile-user-group');
+        
+        if (token && user) {
+            try {
+                const userData = JSON.parse(user);
+                // Hide auth buttons, show user info
+                if (authButtons) authButtons.style.display = 'none';
+                if (userInfo) userInfo.style.display = 'flex';
+                if (mobileAuthGroup) mobileAuthGroup.style.display = 'none';
+                if (mobileUserGroup) mobileUserGroup.style.display = 'flex';
+                // Update user name and initial
+                const initialEl = document.getElementById('user-initial');
+                const nameEl = document.getElementById('user-name');
+                if (initialEl) initialEl.textContent = userData.name.charAt(0).toUpperCase();
+                if (nameEl) nameEl.textContent = userData.name;
+            } catch (e) {
+                console.error('Error parsing user data:', e);
+                authButtons.style.display = 'flex';
+                userInfo.style.display = 'none';
+                if (mobileAuthGroup) mobileAuthGroup.style.display = 'flex';
+                if (mobileUserGroup) mobileUserGroup.style.display = 'none';
+            }
+        } else {
+            // Not logged in - show auth buttons, hide user info
+            if (authButtons) authButtons.style.display = 'flex';
+            if (userInfo) userInfo.style.display = 'none';
+            if (mobileAuthGroup) mobileAuthGroup.style.display = 'flex';
+            if (mobileUserGroup) mobileUserGroup.style.display = 'none';
+        }
+    }
+
+    // Run on page load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            if (typeof updateBadge === 'function') updateBadge(); // Cập nhật số lượng giỏ hàng khi trang load
+        });
+    } else {
+        checkLoginStatus();
+        if (typeof updateBadge === 'function') updateBadge(); // Cập nhật số lượng giỏ hàng khi trang load
+    }
+    // Safety check after short delay
+    setTimeout(() => {
+        checkLoginStatus();
+        if (typeof updateBadge === 'function') updateBadge(); // Cập nhật lại badge sau 100ms
+    }, 100);
+
+    function logout() {
+        logoutUser();
+    }
+    </script>
+</body>
+</html>
